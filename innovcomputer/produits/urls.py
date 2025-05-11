@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import produits_home
 
 urlpatterns=[
-    path('',views.produits_home,name="produits")
+    path('produits/',produits_home,name="produits"),
 ]

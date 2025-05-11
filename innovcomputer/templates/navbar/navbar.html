@@ -1,27 +1,53 @@
-<nav class="bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg py-4">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+<nav class="bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg py-6 md:py-8 h-16 md:h-20 flex items-center justify-center">
+    <div class="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between w-full">
         <!-- Logo -->
-        <h1 class="text-3xl font-extrabold text-orange-500">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-orange-500">
             Innov<span class="text-white">C</span>omputer
         </h1>
 
-        <!-- Menu de navigation (Desktop) -->
-        <ul class="hidden md:flex space-x-6 text-lg">
-          
+        <!-- Menu Desktop -->
+        <ul class="hidden lg:flex gap-x-6 text-lg">
+            <li><a href="#accueil" class="hover:text-orange-500">Accueil</a></li>
+            <li><a href="#apropos" class="hover:text-orange-500">À propos</a></li>
+            <li><a href="#produits" class="hover:text-orange-500">Produits</a></li>
+            <li><a href="#contact" class="hover:text-orange-500">Contact</a></li>
+        </ul>
 
-        <!-- Bouton Connexion (Desktop) -->
-        <a href="#" class="btn-primary bg-orange-500 hover:bg-orange-700 p-2 rounded hidden md:inline-block ">Connexion</a>
+        <!-- Bouton Connexion -->
+        <a href="#" class="bg-orange-500 hover:bg-orange-700 p-2 md:p-3 rounded hidden lg:inline-block">Connexion</a>
 
-        <!-- Menu Mobile -->
-        <button id="mobile-menu-button" class="md:hidden text-3xl text-white focus:outline-none">
-            <i class="fas fa-bars"></i>
+        <!-- Bouton Menu Mobile -->
+        <button id="mobile-menu-button" aria-expanded="false" class="lg:hidden bg-white p-3 rounded shadow-md focus:outline-none">
+            <span class="block w-6 h-1 bg-black mb-1"></span>
+            <span class="block w-6 h-1 bg-black"></span>
+            <span class="block w-6 h-1 bg-black mt-1"></span>
         </button>
     </div>
 
-    <!-- Menu Mobile déroulant -->
-    <div id="mobile-menu" class="hidden absolute bg-gray-900 w-full text-center py-4 transition-all duration-300">
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden fixed top-16 right-4 bg-gray-900 text-white shadow-lg rounded-lg py-4 w-48 text-center transition-transform scale-95">
         <ul class="space-y-4 text-lg">
-            <li><a href="#" class="btn-primary">Connexion</a></li>
+            <li><a href="#accueil" class="block py-2 hover:text-orange-500">Accueil</a></li>
+            <li><a href="#apropos" class="block py-2 hover:text-orange-500">À propos</a></li>
+            <li><a href="#produits" class="block py-2 hover:text-orange-500">Produits</a></li>
+            <li><a href="#contact" class="block py-2 hover:text-orange-500">Contact</a></li>
+            <li><a href="#" class="block py-2 bg-orange-500 hover:bg-orange-700 rounded">Connexion</a></li>
         </ul>
     </div>
 </nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuButton = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+
+    menuButton.addEventListener("click", function () {
+        const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+
+        menuButton.setAttribute("aria-expanded", !isExpanded);
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("scale-100");
+        menu.classList.toggle("scale-95");
+    });
+});
+</script>

@@ -15,40 +15,309 @@
         </button>
     </section>
 
-
-
-    
-    <!-- Section Produits -->
-    <section id="produits" class="py-20 bg-gray-100 text-center">
-        <h2 class="text-4xl font-bold">Nos Produits</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-10 w-full px-4">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full transform hover:scale-105 transition duration-300">
-                <a href="#" target="_blank">
-                    <img src="{% static 'image/globe_earth_64px.png' %}" alt="globe_earth" class="w-full h-auto object-cover rounded-md">
-                </a>
-                <h3 class="mt-4 text-xl font-semibold text-blue-600">Développement Web</h3>
-                <p class="mt-2 text-gray-700">Stockage sécurisé et collaboration avancée.</p>
+    <section class="py-16 bg-white">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">Notre mission&nbsp;: Enseigner, Innover, Inspirer</h2>
+        <!-- Logos fleurés pour chaque valeur clé -->
+        <div class="flex flex-col md:flex-row gap-8 justify-center mb-12">
+          <div class="flex-1 bg-gray-50 rounded-xl shadow-md p-6 hover:shadow-xl transition">
+            <div class="flex items-center justify-center mb-4">
+              <div class="relative w-14 h-14 flex items-center justify-center">
+                <div class="absolute w-7 h-7 bg-orange-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                <div class="absolute w-7 h-7 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                <div class="absolute w-7 h-7 bg-green-400 rounded-full" style="right:0; top:60%;"></div>
+              </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full transform hover:scale-105 transition duration-300">
-                <a href="#" target="_blank">
-                    <img src="{% static 'image/security_128px.png' %}" alt="securite" class="w-full h-auto object-cover rounded-md">
-                </a>
-                <h3 class="mt-4 text-xl font-semibold text-blue-600">Sécurité</h3>
-                <p class="mt-2 text-gray-700">Protection avancée.</p>
+            <h3 class="text-xl font-bold mb-2">Enseigner</h3>
+            <p class="text-gray-600">Des formations pratiques et accessibles pour tous, du débutant à l’expert, en programmation, web, IA et plus.</p>
+            <ol class="text-left mt-4 text-gray-700 text-base list-disc list-inside">
+              <li><span class="font-semibold text-orange-500">Programmation Python/Django :</span> Apprenez à créer des applications web robustes et évolutives.</li>
+              <li><span class="font-semibold text-orange-500">Développement Web :</span> Maîtrisez HTML5, CSS3, JavaScript et les frameworks modernes.</li>
+              <li><span class="font-semibold text-orange-500">Intelligence Artificielle :</span> Initiez-vous au machine learning, à la data science.</li>
+              <li><span class="font-semibold text-orange-500">Développement Mobile :</span> Créez des applications Android/iOS performantes et intuitives.</li>
+            </ol>
+          </div>
+          <div class="flex-1 bg-gray-50 rounded-xl shadow-md p-6 hover:shadow-xl transition">
+            <div class="flex items-center justify-center mb-4">
+              <div class="relative w-14 h-14 flex items-center justify-center">
+                <div class="absolute w-7 h-7 bg-blue-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                <div class="absolute w-7 h-7 bg-yellow-400 rounded-full" style="left:0; top:60%;"></div>
+                <div class="absolute w-7 h-7 bg-pink-400 rounded-full" style="right:0; top:60%;"></div>
+              </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full transform hover:scale-105 transition duration-300">
-                <a href="#" target="_blank">
-                    <img src="{% static 'image/artificial_intelligence_48px.png' %}" alt="intelligence" class="w-full h-auto object-cover rounded-md">
-                </a>
-                <h3 class="mt-4 text-xl font-semibold text-blue-600">Intelligence Artificielle</h3>
-                <p class="mt-2 text-gray-700">Automatisation des tâches avec IA.</p>
+            <h3 class="text-xl font-bold mb-2">Innover</h3>
+            <p class="text-gray-600">Nous développons des solutions technologiques sur-mesure et restons à la pointe de l’innovation digitale.</p>
+            <ol class="text-left mt-4 text-gray-700 text-base list-disc list-inside">
+              <li><span class="font-semibold text-blue-500">Projets d’entreprise :</span> Accompagnement sur la digitalisation, l’automatisation et l’innovation métier.</li>
+              <li><span class="font-semibold text-blue-500">Projets gouvernementaux :</span> Solutions numériques pour les institutions publiques et collectivités.</li>
+              <li><span class="font-semibold text-blue-500">Veille technologique :</span> Découverte des dernières tendances et outils du numérique.</li>
+              <li><span class="font-semibold text-blue-500">Défis d’innovation :</span> Participation à des challenges pour stimuler la créativité et l’esprit d’équipe.</li>
+            </ol>
+          </div>
+          <div class="flex-1 bg-gray-50 rounded-xl shadow-md p-6 hover:shadow-xl transition">
+            <div class="flex items-center justify-center mb-4">
+              <div class="relative w-14 h-14 flex items-center justify-center">
+                <div class="absolute w-7 h-7 bg-green-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                <div class="absolute w-7 h-7 bg-orange-400 rounded-full" style="left:0; top:60%;"></div>
+                <div class="absolute w-7 h-7 bg-blue-400 rounded-full" style="right:0; top:60%;"></div>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Créer & Inspirer</h3>
+            <p class="text-gray-600">Organisation de concours, hackathons et événements pour stimuler la créativité et révéler les talents de demain.</p>
+            <ol class="text-left mt-4 text-gray-700 text-base list-disc list-inside">
+              <li><span class="font-semibold text-green-500">Concours de programmation :</span> Mettez vos compétences à l’épreuve et remportez des prix.</li>
+              <li><span class="font-semibold text-green-500">Hackathons :</span> Travaillez en équipe sur des projets innovants en un temps record.</li>
+              <li><span class="font-semibold text-green-500">Coaching & mentorat :</span> Bénéficiez d’un accompagnement personnalisé par des experts du secteur.</li>
+              <li><span class="font-semibold text-green-500">Communauté :</span> Rejoignez un réseau dynamique d’apprenants et de professionnels passionnés.</li>
+            </ol>
+          </div>
+        </div>
+        <p class="text-lg md:text-xl text-gray-700 mb-8">Chez INNOVcomputer, nous sommes passionnés par la transmission du savoir et l’innovation technologique. Nous accompagnons nos apprenants et partenaires dans leur montée en compétences, la découverte des nouvelles technologies et la concrétisation de leurs projets numériques.</p>
+        <!-- Carousel des services/projets élargi -->
+        <div id="carousel-services" class="relative w-full max-w-3xl mx-auto">
+          <div class="overflow-hidden rounded-xl shadow-lg">
+            <div class="flex transition-transform duration-700" id="carousel-inner">
+              <!-- Slide 1 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Développement logiciel</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-orange-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-green-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Conception, développement et déploiement d'applications web, mobiles ou desktop sur-mesure. Nous vous accompagnons de l'idée à la mise en production, avec un suivi personnalisé et des technologies modernes.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Analyse des besoins et rédaction du cahier des charges</li>
+                  <li>Développement agile et itératif</li>
+                  <li>Maintenance évolutive et corrective</li>
+                  <li>Formation à l'utilisation de vos outils</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Confiez-nous vos idées, nous les transformons en solutions concrètes et performantes !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 2 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Intelligence artificielle (IA)</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-purple-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-pink-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Développez des solutions intelligentes grâce à l’IA&nbsp;: automatisation, analyse prédictive, traitement du langage naturel, vision par ordinateur. Nous vous aidons à intégrer l’IA dans vos projets pour gagner en efficacité et innover.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Création de modèles de machine learning sur-mesure</li>
+                  <li>Analyse de données et data science</li>
+                  <li>Automatisation de tâches complexes</li>
+                  <li>Accompagnement à l’intégration IA dans vos outils métiers</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Donnez une longueur d’avance à votre entreprise grâce à l’IA !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 4 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Réseaux et télécommunications</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-cyan-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-green-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Conception, déploiement et gestion d’infrastructures réseau performantes et sécurisées. Nous vous aidons à rester connectés et à optimiser vos communications.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Installation et configuration de réseaux d’entreprise</li>
+                  <li>Optimisation des performances réseau</li>
+                  <li>Sécurisation des accès et des données</li>
+                  <li>Support et maintenance 24/7</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Des réseaux fiables pour une entreprise connectée et performante.</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 5 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Bases de données</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-pink-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Gestion, optimisation et sécurisation de vos bases de données. Nous assurons la fiabilité, la performance et la disponibilité de vos informations stratégiques.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Conception de bases de données relationnelles et NoSQL</li>
+                  <li>Optimisation des requêtes et des performances</li>
+                  <li>Sauvegarde, restauration et sécurité des données</li>
+                  <li>Migration et intégration de données</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Vos données, notre priorité pour une gestion optimale !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 7 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Ingénierie matérielle</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-green-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Conception, prototypage et fabrication de solutions matérielles innovantes. Nous intervenons sur l’ensemble de la chaîne, du design à l’industrialisation.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Conception de cartes électroniques et microcontrôleurs</li>
+                  <li>Prototypage rapide et impression 3D</li>
+                  <li>Tests, validation et industrialisation</li>
+                  <li>Intégration hardware/software</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Des solutions matérielles innovantes pour vos besoins spécifiques.</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 8 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Informatique embarquée</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-green-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Développement de systèmes embarqués et objets connectés (IoT). Nous concevons des solutions intelligentes et autonomes pour l’industrie, la santé, la domotique, etc.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Programmation de microcontrôleurs et capteurs</li>
+                  <li>Intégration de protocoles de communication (Bluetooth, LoRa, Zigbee...)</li>
+                  <li>Optimisation énergétique et miniaturisation</li>
+                  <li>Déploiement d’objets connectés à grande échelle</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Connectez vos objets et automatisez vos processus !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 9 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Développement mobile</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-orange-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-fuchsia-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Conception et développement d’applications mobiles iOS et Android performantes, ergonomiques et sécurisées. Nous vous accompagnons de l’idée à la publication sur les stores.</p>
+                <ol class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Applications natives et hybrides</li>
+                  <li>UX/UI design sur-mesure</li>
+                  <li>Tests, déploiement et maintenance</li>
+                  <li>Intégration de fonctionnalités avancées (paiement, géolocalisation, notifications...)</li>
+                </ol>
+                <p class="text-orange-600 font-semibold mt-4">Touchez vos clients partout, tout le temps !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 10 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Big Data</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-fuchsia-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-yellow-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Exploitez le potentiel de vos données massives pour prendre de meilleures décisions. Nous vous aidons à collecter, stocker, traiter et visualiser vos données à grande échelle.</p>
+                <ul class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Architecture Big Data (Hadoop, Spark...)</li>
+                  <li>Traitement et analyse de données volumineuses</li>
+                  <li>Visualisation et reporting interactif</li>
+                  <li>Stratégie de gouvernance des données</li>
+                </ul>
+                <p class="text-orange-600 font-semibold mt-4">Transformez vos données en valeur ajoutée !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              <!-- Slide 11 -->
+              <div class="min-w-full flex flex-col items-center bg-white p-8">
+                <h4 class="text-2xl font-bold mb-2">Automatisation & systèmes autonomes</h4>
+                <div class="mb-4 flex items-center justify-center">
+                  <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="absolute w-8 h-8 bg-amber-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                    <div class="absolute w-8 h-8 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                    <div class="absolute w-8 h-8 bg-gray-400 rounded-full" style="right:0; top:60%;"></div>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-2">Automatisez vos processus métiers et gagnez en productivité grâce à des systèmes autonomes et intelligents. Nous concevons des solutions sur-mesure pour chaque secteur d’activité.</p>
+                <ul class="text-left mt-2 text-gray-700 text-base list-disc list-inside max-w-md">
+                  <li>Automatisation de tâches répétitives</li>
+                  <li>Robots logiciels (RPA)</li>
+                  <li>Intégration de systèmes autonomes (IoT, IA...)</li>
+                  <li>Suivi et optimisation en temps réel</li>
+                </ul>
+                <p class="text-orange-600 font-semibold mt-4">Gagnez en efficacité et en compétitivité !</p>
+                <button class="mt-4 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">S'inscrire</button>
+              </div>
+              
+            </div>
+          </div>
+          <!-- Boutons de navigation dynamiques -->
+          <div class="flex justify-center mt-4 gap-2">
+            <button class="w-3 h-3 rounded-full bg-gray-400" onclick="carouselGoTo(0)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(1)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(2)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(3)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(4)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(5)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(6)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(7)"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-300" onclick="carouselGoTo(8)"></button>
+           
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      let currentSlide = 0;
+      function carouselGoTo(idx) {
+        const inner = document.getElementById('carousel-inner');
+        currentSlide = idx;
+        inner.style.transform = `translateX(-${idx * 100}%)`;
+        // Update dots
+        document.querySelectorAll('#carousel-services button').forEach((btn, i) => {
+          btn.classList.toggle('bg-gray-400', i === idx);
+          btn.classList.toggle('bg-gray-300', i !== idx);
+        });
+      }
+      // Init
+      carouselGoTo(0);
+    </script>
+
+    <section class="service py-10 bg-gray-100">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white shadow-md rounded-lg p-6 text-center">
+                <img src="{% static 'image/py.png' %}" alt="Python" class="w-24 mx-auto mb-4">
+                <h5 class="text-xl font-semibold text-gray-800">Python</h5>
+                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6 text-center">
+                <img src="{% static 'image/dj.png' %}" alt="Django" class="w-24 mx-auto mb-4">
+                <h5 class="text-xl font-semibold text-gray-800">Django</h5>
+                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
+            </div>
+            <div class="bg-white shadow-md rounded-lg p-6 text-center">
+                <img src="{% static 'image/ht.png' %}" alt="HTML5" class="w-24 mx-auto mb-4">
+                <h5 class="text-xl font-semibold text-gray-800">HTML5</h5>
+                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
+                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-
-
-    {% include "footer/footer.html" %}
+{% include "footer/footer.html" %}
 {% endblock %}
 <style>
     /* Bouton Connexion */

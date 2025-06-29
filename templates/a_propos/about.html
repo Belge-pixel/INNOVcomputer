@@ -1,0 +1,81 @@
+{% extends "base_templates.html" %}  
+{% block title %}À propos{% endblock title %}
+
+{% block content %}
+{% include "navbar/navbar.html" %}
+<section class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-16">
+  <div class="container mx-auto text-center">
+    <h1 class="text-5xl font-extrabold">Former les Jeunes aux Technologies de Demain</h1>
+    <p class="mt-4 text-lg">Notre mission est de doter la jeunesse des compétences nécessaires dans le domaine de l'informatique.</p>
+    <a href="#" class="mt-6 inline-block bg-white text-green-600 py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition">Découvrez nos formations</a>
+  </div>
+</section>
+
+<section class="bg-gray-50 py-12">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-blue-600 mb-8">Qui Sommes-Nous ?</h2>
+    <p class="text-gray-700 mb-4 max-w-2xl mx-auto leading-relaxed">Nous sommes une entreprise dédiée à l'éducation et à l'autonomisation des jeunes à travers des formations en technologies numériques. Avec une équipe d'experts passionnés, nous nous engageons à offrir des programmes de formation de haute qualité qui répondent aux besoins du marché.</p>
+    <p class="text-gray-700 mb-4 max-w-2xl mx-auto leading-relaxed">Notre approche est centrée sur l'apprentissage pratique, permettant aux étudiants d'acquérir des compétences directement applicables dans le monde professionnel.</p>
+    <p class="text-gray-700 max-w-2xl mx-auto leading-relaxed">Nous croyons en l'importance de l'éducation et de l'innovation pour transformer notre société et offrir des opportunités à la jeunesse.</p>
+  </div>
+</section>
+
+<section class="bg-white py-12 shadow-lg">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-blue-600 mb-8">Nos Objectifs</h2>
+    <ul class="list-disc list-inside text-gray-700 mx-auto max-w-2xl space-y-2">
+      <li class="text-lg">Former des professionnels qualifiés dans les technologies de l'information, prêts à répondre aux défis actuels.</li>
+      <li class="text-lg">Encourager l'innovation et la créativité chez les jeunes pour les préparer à un avenir numérique.</li>
+      <li class="text-lg">Promouvoir l'accès à l'éducation numérique pour toutes et tous, quelle que soit leur origine.</li>
+      <li class="text-lg">Accompagner les entreprises dans leur transformation numérique, en fournissant des solutions adaptées et des conseils stratégiques.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="container mx-auto py-12">
+  <h2 class="text-4xl font-bold text-center mb-8">Nos Formations</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
+      <h5 class="text-xl font-semibold">Formation Python</h5>
+      <p class="mt-2 text-gray-700">Apprenez à programmer en Python, le langage de choix pour de nombreux domaines professionnels. Nos cours incluent des projets pratiques et des études de cas pour une meilleure compréhension.</p>
+    </div>
+    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
+      <h5 class="text-xl font-semibold">Développement Frontend</h5>
+      <p class="mt-2 text-gray-700">Maîtrisez les technologies comme HTML, CSS et JavaScript pour créer des interfaces utilisateur attrayantes. Nos formateurs vous guideront à travers des exercices pratiques et des projets réels.</p>
+    </div>
+    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
+      <h5 class="text-xl font-semibold">Développement Backend</h5>
+      <p class="mt-2 text-gray-700">Découvrez les frameworks et les bases de données pour construire des applications robustes. Nous proposons des sessions pratiques pour vous aider à développer vos propres projets.</p>
+    </div>
+  </div>
+</section>
+
+<section class="text-center py-12 bg-gray-50">
+  <h4 class="text-3xl font-bold mb-6">Envie de Collaborer avec Nous ?</h4>
+  <p class="text-gray-700 mb-4">Rejoignez-nous dans notre mission d'éducation et d'autonomisation des jeunes. Ensemble, nous pouvons faire la différence.</p>
+  <a href="#" class="mt-4 inline-block bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition">Contactez-nous</a>
+</section>
+
+<section class="container mx-auto py-12">
+  <h2 class="text-4xl font-bold text-center mb-8">Notre Expertise</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <h5 class="text-xl font-semibold mb-2">Développement d’applications sur mesure</h5>
+      <p class="text-gray-700">Conception de solutions web et mobiles adaptées aux besoins réels de votre organisation. Nous collaborons étroitement avec vous pour garantir la satisfaction de vos utilisateurs.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <h5 class="text-xl font-semibold mb-2">Consulting IT et transformation numérique</h5>
+      <p class="text-gray-700">Conseil stratégique et accompagnement dans la digitalisation de vos processus métiers. Notre équipe d'experts vous aide à naviguer dans le paysage numérique actuel.</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <h5 class="text-xl font-semibold mb-2">Formation professionnelle</h5>
+      <p class="text-gray-700">Ateliers et sessions personnalisées pour renforcer les compétences de vos équipes. Nous adaptons notre contenu de formation à vos besoins spécifiques.</p>
+    </div>
+    <div class="bg-blue-600 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <h5 class="text-xl font-semibold mb-2">Accompagnement personnalisé</h5>
+      <p>Un service exclusif réservé aux membres inscrits, pour un suivi humain, stratégique et opérationnel. Nous garantissons un accompagnement sur mesure pour chaque entreprise.</p>
+    </div>
+  </div>
+</section>
+{% include "footer/footer.html" %}
+{% endblock %}

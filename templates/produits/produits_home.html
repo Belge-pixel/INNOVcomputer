@@ -1,0 +1,78 @@
+{% extends "base_templates.html" %}
+{% block content %}
+{% include "navbar/navbar.html" %}
+<section class="bg-gradient-to-b from-white via-gray-50 to-white py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 mb-12 text-center tracking-tight">Nos Produits & Services</h1>
+
+    <!-- Filtres -->
+    <form method="get" class="flex flex-wrap gap-4 items-center justify-center mb-12">
+      <select name="categorie" class="border border-gray-300 p-3 rounded-md focus:ring-indigo-500">
+        <option value="">Toutes les catégories</option>
+        <option value="logiciel">Logiciels</option>
+        <option value="matériel">Matériels</option>
+      </select>
+      <input type="text" name="search" placeholder="Recherche..." class="border border-gray-300 p-3 rounded-md" />
+      <button class="bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">🔍 Filtrer</button>
+    </form>
+
+    <!-- Grille produits -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+        <img src="https://www.dpreview.com/files/p/articles/7952219469/google-imagen-lead-image.jpeg" alt="Produit" class="w-full h-48 object-cover" />
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">Produit Alpha</h2>
+          <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+            Solution performante pour gérer vos flux opérationnels avec efficacité.
+          </p>
+
+          <!-- Caractéristiques -->
+          <table class="w-full text-sm text-left mb-4">
+            <tbody>
+              <tr class="border-b">
+                <th class="py-1 pr-4 text-gray-500">Version</th>
+                <td class="py-1">v2.4.1</td>
+              </tr>
+              <tr class="border-b">
+                <th class="py-1 pr-4 text-gray-500">Compatibilité</th>
+                <td class="py-1">Windows / Linux</td>
+              </tr>
+              <tr>
+                <th class="py-1 pr-4 text-gray-500">Licence</th>
+                <td class="py-1">Standard ou Pro</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button
+            onclick="document.getElementById('devis').scrollIntoView({ behavior: 'smooth' })"
+            class="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+          >
+            💬 Demander un devis →
+          </button>
+        </div>
+      </div>
+
+      <!-- Copie de cartes produit si besoin -->
+    </div>
+
+    <!-- Formulaire devis -->
+    <div id="devis" class="mt-24 max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
+      <h3 class="text-2xl font-bold mb-6 text-gray-800 text-center">📩 Demande de devis</h3>
+      <form method="post" class="grid gap-6">
+        {% csrf_token %}
+        <div class="grid md:grid-cols-2 gap-4">
+          <input name="nom" type="text" placeholder="Votre nom" class="border p-3 rounded w-full" />
+          <input name="email" type="email" placeholder="Votre email" class="border p-3 rounded w-full" />
+        </div>
+        <input name="produit" type="text" placeholder="Produit concerné" class="border p-3 rounded w-full" />
+        <textarea name="message" rows="4" placeholder="Votre message..." class="border p-3 rounded w-full"></textarea>
+        <button class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium">
+          Envoyer ma demande
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+{% include "footer/footer.html" %}
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base_templates.html" %}
+{% block content %}
+{% include "navbar/navbar.html" %}
+
+<section class="bg-gradient-to-br from-gray-100 via-white to-gray-100 min-h-screen px-6 py-12">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10 tracking-tight">Trésorerie Immédiate</h1>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl">
+        <p class="text-sm text-gray-500">Solde Actuel</p>
+        <p class="text-3xl font-bold text-green-600 mt-2">+12 500 €</p>
+      </div>
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl">
+        <p class="text-sm text-gray-500">Total Dépenses</p>
+        <p class="text-3xl font-bold text-red-500 mt-2">-3 750 €</p>
+      </div>
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl">
+        <p class="text-sm text-gray-500">Transactions</p>
+        <p class="text-3xl font-bold text-indigo-600 mt-2">94</p>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <form class="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <input type="date" name="date" class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full" />
+      <input type="text" name="categorie" class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full" placeholder="Catégorie" />
+      <input type="number" name="montant" class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full" placeholder="Montant" />
+      <select name="type" class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full">
+        <option value="">Type</option>
+        <option value="entrée">Entrée</option>
+        <option value="sortie">Sortie</option>
+      </select>
+      <textarea name="note" class="col-span-1 sm:col-span-2 border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full" placeholder="Note..."></textarea>
+      <button class="bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition col-span-1 sm:col-span-2">
+        ➕ Ajouter une transaction
+      </button>
+    </form>
+
+    <!-- Filtres -->
+    <form method="get" class="flex flex-wrap items-center gap-4 mb-6">
+      <select name="filtre_type" class="border p-3 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+        <option value="">Tous les types</option>
+        <option value="entrée">Entrées</option>
+        <option value="sortie">Sorties</option>
+      </select>
+      <input type="text" name="search" placeholder="Recherche..." class="border p-3 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+      <button class="bg-gray-700 text-white px-5 py-2.5 rounded-md hover:bg-gray-800 transition">Filtrer</button>
+    </form>
+
+    <!-- Tableau -->
+    <div class="overflow-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl">
+      <table class="min-w-full text-sm text-gray-800">
+        <thead class="bg-gray-200 text-gray-600 uppercase tracking-wide">
+          <tr>
+            <th class="p-4 text-left">Date</th>
+            <th class="p-4 text-left">Type</th>
+            <th class="p-4 text-left">Montant</th>
+            <th class="p-4 text-left">Catégorie</th>
+            <th class="p-4 text-left">Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="p-4">27/06/2025</td>
+            <td class="p-4 text-green-600 font-semibold">Entrée</td>
+            <td class="p-4">+1 200 €</td>
+            <td class="p-4">Paiement client</td>
+            <td class="p-4">Facture n°123</td>
+          </tr>
+          <tr class="border-t hover:bg-gray-50 transition">
+            <td class="p-4">26/06/2025</td>
+            <td class="p-4 text-red-500 font-semibold">Sortie</td>
+            <td class="p-4">-400 €</td>
+            <td class="p-4">Frais bancaires</td>
+            <td class="p-4">Mensuel</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Boutons export -->
+    <div class="flex flex-wrap gap-4 mt-6">
+      <a href="#" class="bg-rose-500 text-white px-5 py-2 rounded-lg shadow hover:bg-rose-600">📄 PDF</a>
+      <a href="#" class="bg-emerald-500 text-white px-5 py-2 rounded-lg shadow hover:bg-emerald-600">📊 Excel</a>
+    </div>
+
+    <!-- Graphique -->
+    <div class="mt-12 bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+      <h3 class="text-lg font-semibold text-gray-700 mb-4">Évolution Mensuelle</h3>
+      <canvas id="fluxChart" class="w-full h-64"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById('fluxChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Fév', 'Mars', 'Avr'],
+          datasets: [
+            {
+              label: 'Entrées',
+              data: [2400, 3200, 1800, 2600],
+              backgroundColor: '#4F46E5'
+            },
+            {
+              label: 'Sorties',
+              data: [1800, 2000, 1200, 1600],
+              backgroundColor: '#EC4899'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top'
+            }
+          }
+        }
+      });
+    </script>
+  </div>
+</section>
+
+{% include "footer/footer.html" %}
+{% endblock %}

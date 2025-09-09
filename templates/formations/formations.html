@@ -1,0 +1,78 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block content %}
+{% include "navbar/navbar.html" %}
+
+<!-- Section Formulaire pour ajouter une formation -->
+<section class="py-12 bg-gray-100">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Ajouter une formation</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="titre" class="block text-gray-700 font-semibold mb-2">Titre :</label>
+                <input type="text" id="titre" name="titre" class="border rounded w-full p-2" placeholder="Titre de la formation" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 font-semibold mb-2">Description :</label>
+                <textarea id="description" name="description" rows="4" class="border rounded w-full p-2" placeholder="Description de la formation" required></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="points_cles" class="block text-gray-700 font-semibold mb-2">Points clés (séparés par des virgules) :</label>
+                <textarea id="points_cles" name="points_cles" rows="3" class="border rounded w-full p-2" placeholder="Point1, Point2, Point3"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="block text-gray-700 font-semibold mb-2">Image :</label>
+                <input type="file" id="image" name="image" class="border rounded w-full p-2">
+            </div>
+
+            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">
+                Ajouter la formation
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- Section Liste des formations existantes -->
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-12">Nos Formations</h2>
+
+        {% if formations_list %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for formation in formations_list %}
+                <div class="bg-gray-50 shadow-md rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
+                    {% if formation.image %}
+                        <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-32 h-32 object-cover mb-4 rounded">
+                    {% else %}
+                        <div class="w-32 h-32 bg-gray-200 flex items-center justify-center mb-4 rounded">
+                            <span class="text-gray-400">Pas d'image</span>
+                        </div>
+                    {% endif %}
+
+                    <h3 class="text-xl font-bold mb-2">{{ formation.titre }}</h3>
+                    <p class="text-gray-600 mb-4">{{ formation.description }}</p>
+
+                    {% if formation.points_cles %}
+                    <ul class="text-left mb-4 list-disc list-inside text-gray-700">
+                        {% for point in formation.get_points_list %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="text-center text-gray-500">Aucune formation disponible pour le moment.</p>
+        {% endif %}
+    </div>
+</section>
+
+{% include "footer/footer.html" %}
+{% endblock %}

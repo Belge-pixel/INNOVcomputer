@@ -11,4 +11,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('tresorerie/', include('tresorerie.urls')),
     path('user/', include('users.urls')),
+    path('formations/', include('formations.urls')),
+    path('connexion/', include('connexion.urls')),  
+    path('enquetes/', include('enquetes.urls')),
 ]

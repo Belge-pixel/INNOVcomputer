@@ -12,11 +12,14 @@
             <li><a href="{% url 'produits' %}" class="hover:text-orange-500">Produits</a></li>
             <li><a href="{% url 'contact' %}" class="hover:text-orange-500">Contact</a></li>
             <li><a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a></li>
-            <li><a href="{% url 'tresorerie' %}" class="hover:text-orange-500">Tresorerie</a></li>
+            <li><a href="{% url 'tresorerie' %}" class="hover:text-orange-500">Trésorerie</a></li>
         </ul>
 
-        <!-- Bouton Connexion -->
-        <a href="#" class="bg-orange-500 hover:bg-orange-700 p-2 md:p-3 rounded hidden lg:inline-block">Connexion</a>
+        <!-- Boutons Connexion / Inscription -->
+        <div class="hidden lg:flex gap-4">
+            <a href="{% url 'login' %}" class="bg-orange-500 hover:bg-orange-700 p-2 md:p-3 rounded">Connexion</a>
+            <a href="{% url 'register' %}" class="bg-white text-orange-500 hover:bg-gray-100 p-2 md:p-3 rounded font-bold">S'inscrire</a>
+        </div>
 
         <!-- Bouton Menu Mobile -->
         <button id="mobile-menu-button" aria-expanded="false" class="lg:hidden bg-white p-3 rounded shadow-md focus:outline-none">
@@ -34,8 +37,9 @@
             <li><a href="{% url 'produits' %}" class="hover:text-orange-500">Produits</a></li>
             <li><a href="{% url 'contact' %}" class="hover:text-orange-500">Contact</a></li>
             <li><a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a></li>
-            <li><a href="{% url 'tresorerie' %}" class="hover:text-orange-500">Tresorerie</a></li>
-            <li><a href="#" class="block py-2 bg-orange-500 hover:bg-orange-700 rounded">Connexion</a></li>
+            <li><a href="{% url 'tresorerie' %}" class="hover:text-orange-500">Trésorerie</a></li>
+            <li><a href="{% url 'login' %}" class="block py-2 bg-orange-500 hover:bg-orange-700 rounded">Connexion</a></li>
+            <li><a href="{% url 'register' %}" class="block py-2 bg-white text-orange-500 hover:bg-gray-100 rounded font-bold">S'inscrire</a></li>
         </ul>
     </div>
 </nav>

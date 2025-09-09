@@ -33,7 +33,9 @@ INSTALLED_APPS = [
     'blog',
     'tresorerie',
     'users',
+    'enquetes',
     'formations',
+    'connexion',
 ]
 
 MIDDLEWARE = [

@@ -118,9 +118,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+# Dossier où seront stockés les fichiers uploadés
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# URL pour accéder aux fichiers depuis le navigateur
+MEDIA_URL = "/media/"
 
 AUTH_USER_MODEL = "users.User"
 
+AUTH_PASSWORD_VALIDATORS = []
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

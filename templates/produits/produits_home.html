@@ -1,6 +1,7 @@
 {% extends "base_templates.html" %}
 {% block content %}
 {% include "navbar/navbar.html" %}
+
 <section class="bg-gradient-to-b from-white via-gray-50 to-white py-20 px-6">
   <div class="max-w-7xl mx-auto">
     <h1 class="text-4xl font-bold text-gray-900 mb-12 text-center tracking-tight">Nos Produits & Services</h1>
@@ -18,61 +19,142 @@
 
     <!-- Grille produits -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for produit in produits %}
       <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-        <img src="https://www.dpreview.com/files/p/articles/7952219469/google-imagen-lead-image.jpeg" alt="Produit" class="w-full h-48 object-cover" />
+        {% if produit.image_produit %}
+        <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}" class="w-full h-48 object-cover" />
+        {% else %}
+        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+          Pas d'image
+        </div>
+        {% endif %}
         <div class="p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-2">Produit Alpha</h2>
-          <p class="text-sm text-gray-600 mb-4 leading-relaxed">
-            Solution performante pour gérer vos flux opérationnels avec efficacité.
-          </p>
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ produit.nom_produit }}</h2>
+          <p class="text-sm text-gray-600 mb-4 leading-relaxed">{{ produit.description_produit }}</p>
 
           <!-- Caractéristiques -->
           <table class="w-full text-sm text-left mb-4">
             <tbody>
               <tr class="border-b">
                 <th class="py-1 pr-4 text-gray-500">Version</th>
-                <td class="py-1">v2.4.1</td>
+                <td class="py-1">{{ produit.version_produit }}</td>
               </tr>
               <tr class="border-b">
                 <th class="py-1 pr-4 text-gray-500">Compatibilité</th>
-                <td class="py-1">Windows / Linux</td>
+                <td class="py-1">{{ produit.compatibilite_produit }}</td>
               </tr>
               <tr>
                 <th class="py-1 pr-4 text-gray-500">Licence</th>
-                <td class="py-1">Standard ou Pro</td>
+                <td class="py-1">{{ produit.licence_produit }}</td>
               </tr>
             </tbody>
           </table>
 
-          <button
-            onclick="document.getElementById('devis').scrollIntoView({ behavior: 'smooth' })"
-            class="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
-          >
+          {% if not user.is_staff %}
+          <button type="button" onclick="toggleForm('devis')" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
             💬 Demander un devis →
           </button>
+          {% endif %}
         </div>
       </div>
-
-      <!-- Copie de cartes produit si besoin -->
+      {% endfor %}
     </div>
 
-    <!-- Formulaire devis -->
-    <div id="devis" class="mt-24 max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
-      <h3 class="text-2xl font-bold mb-6 text-gray-800 text-center">📩 Demande de devis</h3>
+    <!-- Pagination -->
+    <div class="flex justify-center mt-12 gap-2">
+      {% if produits.has_previous %}
+        <a href="?page={{ produits.previous_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">← Précédent</a>
+      {% endif %}
+
+      {% for num in produits.paginator.page_range %}
+        {% if produits.number == num %}
+          <span class="px-4 py-2 bg-indigo-600 text-white rounded">{{ num }}</span>
+        {% elif num > produits.number|add:'-3' and num < produits.number|add:'3' %}
+          <a href="?page={{ num }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+             class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if produits.has_next %}
+        <a href="?page={{ produits.next_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Suivant →</a>
+      {% endif %}
+    </div>
+
+    <!-- Bouton et formulaire ajout produit pour admins -->
+    {% if user.is_staff %}
+    <div class="text-center mt-12">
+      <button type="button" onclick="toggleForm('adminForm')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition">
+        ➕ Ajouter un produit
+      </button>
+    </div>
+
+    <section id="adminForm" class="hidden bg-gray-50 py-16 px-6 mt-6">
+      <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
+        <form method="POST" enctype="multipart/form-data" class="grid gap-6" action="{% url 'produits' %}">
+          {% csrf_token %}
+          <input name="nom_produit" type="text" placeholder="Nom du produit" class="border p-3 rounded w-full" required />
+          <textarea name="description_produit" rows="4" placeholder="Description du produit" class="border p-3 rounded w-full" required></textarea>
+          <div class="grid md:grid-cols-2 gap-4">
+            <input name="version_produit" type="text" placeholder="Version" class="border p-3 rounded w-full" />
+            <input name="compatibilite_produit" type="text" placeholder="Compatibilité" class="border p-3 rounded w-full" />
+          </div>
+          <input name="licence_produit" type="text" placeholder="Licence" class="border p-3 rounded w-full" />
+          <input name="categorie_produit" type="text" placeholder="Catégorie" class="border p-3 rounded w-full" />
+          <input type="file" name="image_produit" class="border p-2 rounded w-full" />
+          <button type="submit" class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium">
+            Ajouter le produit
+          </button>
+        </form>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Bouton et formulaire demande de devis pour clients -->
+    {% if not user.is_staff %}
+    <div class="text-center mt-12">
+      <button type="button" onclick="toggleForm('devis')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition">
+        💬 Demander un devis
+      </button>
+    </div>
+
+    <div id="devis" class="hidden mt-12 max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
       <form method="post" class="grid gap-6">
         {% csrf_token %}
         <div class="grid md:grid-cols-2 gap-4">
-          <input name="nom" type="text" placeholder="Votre nom" class="border p-3 rounded w-full" />
-          <input name="email" type="email" placeholder="Votre email" class="border p-3 rounded w-full" />
+          <input name="nom_customer_demane_devis" type="text" placeholder="Votre nom" class="border p-3 rounded w-full" />
+          <input name="mail_customer_demande_devis" type="email" placeholder="Votre email" class="border p-3 rounded w-full" />
         </div>
-        <input name="produit" type="text" placeholder="Produit concerné" class="border p-3 rounded w-full" />
-        <textarea name="message" rows="4" placeholder="Votre message..." class="border p-3 rounded w-full"></textarea>
+        <select name="produi_demande_devis" class="border p-3 rounded w-full">
+          <option value="">Sélectionnez un produit</option>
+          {% for produit in produits %}
+          <option value="{{ produit.id }}">{{ produit.nom_produit }}</option>
+          {% endfor %}
+        </select>
+        <textarea name="message_demande_devis" rows="4" placeholder="Votre message..." class="border p-3 rounded w-full"></textarea>
         <button class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium">
           Envoyer ma demande
         </button>
       </form>
     </div>
+    {% endif %}
+
   </div>
 </section>
+
+<!-- Script JS pour toggle -->
+<script>
+function toggleForm(id) {
+  const form = document.getElementById(id);
+  if (form.classList.contains('hidden')) {
+    form.classList.remove('hidden');
+    form.scrollIntoView({ behavior: 'smooth' });
+  } else {
+    form.classList.add('hidden');
+  }
+}
+</script>
+
 {% include "footer/footer.html" %}
 {% endblock %}

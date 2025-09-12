@@ -2,117 +2,116 @@
 {% block content %}
   {% include 'navbar/navbar.html' %}
 
-  <div class="bg-neutral-100 font-sans">
+  <div class="bg-neutral-50 font-sans">
 
     <!-- Bandeau d’introduction -->
-    <div class="bg-gradient-to-r from-indigo-50 via-white to-teal-50 py-24 px-6">
-      <div class="max-w-5xl mx-auto text-center">
-        <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight">
+    <section class="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-teal-500 text-white py-32 px-6 shadow-xl">
+      <div class="absolute inset-0 bg-black opacity-30"></div>
+      <div class="relative max-w-5xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
           Le Regard du Futur
         </h1>
-        <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        <p class="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
           Un éclairage humain sur les révolutions technologiques et sociétales de demain.
         </p>
       </div>
+    </section>
+
+    <!-- Bouton pour afficher/masquer le formulaire -->
+    {% if user.is_staff %}
+    <div class="max-w-6xl mx-auto mt-10 px-6 text-center">
+      <button id="toggleFormButton"
+              class="bg-indigo-600 text-white px-8 py-4 rounded-2xl hover:bg-indigo-700 transition shadow-md text-lg font-semibold">
+        ➕ Ajouter une enquête
+      </button>
     </div>
+
+    <!-- Formulaire -->
+    <div id="enqueteForm" class="max-w-4xl mx-auto mt-8 px-8 bg-white rounded-3xl shadow-2xl p-10 hidden transition-all">
+      <form method="POST" action="{% url 'blog' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <input type="text" name="new_title" placeholder="Titre de l'article" required
+                 class="border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg"/>
+
+          <input type="file" name="new_image"
+                 class="border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg"/>
+
+          <textarea name="new_content" placeholder="Contenu de l'article" required
+                    class="col-span-1 md:col-span-2 border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg h-40"></textarea>
+        </div>
+        <div class="mt-8 text-center">
+          <button type="submit"
+                  class="bg-green-500 text-white px-8 py-4 rounded-2xl hover:bg-green-600 transition shadow-md text-lg font-semibold">
+            ✅ Publier l’article
+          </button>
+        </div>
+      </form>
+    </div>
+    {% endif %}
 
     <!-- Section articles -->
-    <div class="max-w-6xl mx-auto py-20 px-6 grid lg:grid-cols-3 gap-16">
-      <!-- Grande mise en avant -->
-      <article class="lg:col-span-2 bg-white rounded-3xl shadow-lg overflow-hidden transform transition hover:shadow-2xl hover:-translate-y-1">
+    <section class="max-w-7xl mx-auto py-20 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for article in articles %}
+      <article class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 flex flex-col">
         <div class="relative">
-          <img
-            src="https://th.bing.com/th/id/R.106357017f8bd35d565974dde8072dbb?rik=IjfuQUTQ8pkXFg&pid=ImgRaw&r=0"
-            alt="Article à la une"
-            class="w-full h-80 object-cover object-center rounded-t-3xl transition duration-500 ease-in-out transform hover:scale-105 hover:brightness-100"
-          />
-          <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-semibold uppercase px-3 py-1 rounded-full shadow">
-            À la une
+          {% if article.new_image %}
+          <img src="{{ article.new_image.url }}" alt="{{ article.new_title }}"
+               class="w-full h-60 object-cover object-center"/>
+          {% else %}
+          <div class="w-full h-60 bg-gradient-to-r from-indigo-100 to-teal-100 flex items-center justify-center text-gray-400 text-lg font-medium">
+            Pas d’image
+          </div>
+          {% endif %}
+          <div class="absolute bottom-3 left-3 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm shadow-md">
+            {{ article.new_publication_date }}
           </div>
         </div>
-        <div class="p-8 sm:p-10">
-          <h2 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
-            Les limites éthiques de l’IA générative
+        <div class="flex-1 p-6 flex flex-col">
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">
+            <a href="" class="hover:text-indigo-600 transition">{{ article.new_title }}</a>
           </h2>
-          <p class="text-base text-gray-600 mb-6 leading-relaxed">
-            Entre fascination et inquiétudes, l’intelligence artificielle soulève des dilemmes
-            fondamentaux dans les sphères publique, académique et économique.
-          </p>
-          <a href="#" class="inline-block text-indigo-700 hover:text-indigo-900 font-medium text-sm tracking-wide transition">
-            Lire l’enquête complète →
-          </a>
+          <p class="text-gray-600 flex-1 leading-relaxed">{{ article.new_content|truncatewords:25 }}</p>
+          <div class="mt-6 text-right">
+            <a href="" class="inline-block bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl hover:bg-indigo-100 transition font-medium">
+              Lire la suite →
+            </a>
+          </div>
         </div>
       </article>
+      {% empty %}
+      <p class="text-gray-400 text-center text-lg col-span-full">🚀 Aucun article pour le moment.</p>
+      {% endfor %}
+    </section>
 
-      <!-- Fil d’actualités -->
-      <aside class="space-y-6">
-        <h3 class="text-lg uppercase tracking-wider font-semibold text-gray-500">En bref</h3>
-        <ul class="space-y-4">
-          {% comment %} Exemple d’éléments d’actualité {% endcomment %}
-          <li class="flex items-start space-x-4 bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition border-l-4 border-indigo-500">
-            <div class="text-indigo-600 text-xl">📅</div>
-            <div>
-              <p class="text-sm text-gray-400">26 juin 2025</p>
-              <p class="font-medium text-gray-800 leading-snug">Inauguration du Lab IA à Kinshasa</p>
-            </div>
-          </li>
-          <li class="flex items-start space-x-4 bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition border-l-4 border-indigo-500">
-            <div class="text-indigo-600 text-xl">📢</div>
-            <div>
-              <p class="text-sm text-gray-400">22 juin 2025</p>
-              <p class="font-medium text-gray-800 leading-snug">Déploiement du premier bot citoyen open source</p>
-            </div>
-          </li>
-          <li class="flex items-start space-x-4 bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition border-l-4 border-indigo-500">
-            <div class="text-indigo-600 text-xl">👩‍💻</div>
-            <div>
-              <p class="text-sm text-gray-400">18 juin 2025</p>
-              <p class="font-medium text-gray-800 leading-snug">Lancement du programme Femmes & Data</p>
-            </div>
-          </li>
-        </ul>
-      </aside>
-    </div>
-
-    <!-- Témoignages éditoriaux -->
-    <div class="bg-gradient-to-tr from-white via-gray-50 to-white py-24 px-6">
-      <div class="max-w-5xl mx-auto">
-        <h4 class="text-4xl font-extrabold text-center text-gray-800 mb-16 leading-tight tracking-tight">
-          Ce que pensent nos lecteurs
-        </h4>
-
-        <div class="grid md:grid-cols-2 gap-12">
-          <!-- Témoignage -->
-          {% for temoignage in temoignages %}
-          <div class="relative bg-white rounded-2xl shadow-xl p-8 border border-indigo-100 hover:shadow-2xl transition duration-300">
-            <div class="flex items-center space-x-4 mb-6">
-              <img
-                src="{{ temoignage.avatar_url }}"
-                alt="{{ temoignage.nom }}"
-                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover shadow-md border-4 border-white ring-2 ring-indigo-200"
-              />
-              <div>
-                <p class="text-gray-800 font-semibold">{{ temoignage.nom }}</p>
-                <p class="text-sm text-gray-500">{{ temoignage.role }}</p>
-              </div>
-            </div>
-            <blockquote class="text-lg text-gray-700 italic leading-relaxed relative z-10">
-              “{{ temoignage.commentaire }}”
-            </blockquote>
-            <svg
-              class="absolute top-6 right-6 w-8 h-8 text-indigo-200 opacity-30"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M7 17c1.66 0 3-1.79 3-4 0-1.41-1.17-3.75-3-6C5.17 9.25 4 11.59 4 13c0 2.21 1.34 4 3 4zm10 0c1.66 0 3-1.79 3-4 0-1.41-1.17-3.75-3-6-1.83 2.25-3 4.59-3 6 0 2.21 1.34 4 3 4z" />
-            </svg>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
+    <!-- Pagination -->
+    <div class="flex justify-center space-x-2 mt-12">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">← Précédent</a>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <span class="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md">{{ num }}</span>
+        {% else %}
+          <a href="?page={{ num }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">Suivant →</a>
+      {% endif %}
     </div>
 
   </div>
 
   {% include 'footer/footer.html' %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const toggleButton = document.getElementById("toggleFormButton");
+      const formContainer = document.getElementById("enqueteForm");
+      toggleButton?.addEventListener("click", () => {
+        formContainer.classList.toggle("hidden");
+      });
+    });
+  </script>
 {% endblock %}

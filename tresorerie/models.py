@@ -7,7 +7,7 @@ class Caisee(models.Model):
     nombre_transactions_caisse = models.IntegerField()
     
 class Transaction(models.Model):
-    date_transaction = models.DateTimeField(auto_now_add=True)    
+    date_transaction = models.DateTimeField(auto_now_add=False)    
     categorie_transaction = models.CharField(max_length=20)
     type_transaction = models.CharField(max_length=10)
     montant_transaction = models.FloatField()

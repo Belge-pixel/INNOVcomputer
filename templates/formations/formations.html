@@ -4,11 +4,11 @@
 {% block content %}
 {% include "navbar/navbar.html" %}
 
-<!-- Section Formulaire pour ajouter une formation -->
+<!-- Formulaire pour ajouter une formation -->
+{% if user.is_staff %}
 <section class="py-12 bg-gray-100">
     <div class="max-w-4xl mx-auto px-6">
         <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Ajouter une formation</h2>
-
         <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
             {% csrf_token %}
             <div class="mb-4">
@@ -27,6 +27,16 @@
             </div>
 
             <div class="mb-4">
+                <label for="date_debut" class="block text-gray-700 font-semibold mb-2">Date de début :</label>
+                <input type="date" id="date_debut" name="date_debut" class="border rounded w-full p-2" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="date_fin" class="block text-gray-700 font-semibold mb-2">Date de fin :</label>
+                <input type="date" id="date_fin" name="date_fin" class="border rounded w-full p-2" required>
+            </div>
+
+            <div class="mb-4">
                 <label for="image" class="block text-gray-700 font-semibold mb-2">Image :</label>
                 <input type="file" id="image" name="image" class="border rounded w-full p-2">
             </div>
@@ -37,8 +47,9 @@
         </form>
     </div>
 </section>
+{% endif %}
 
-<!-- Section Liste des formations existantes -->
+<!-- Liste des formations -->
 <section class="py-16 bg-white">
     <div class="max-w-6xl mx-auto px-6">
         <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-12">Nos Formations</h2>
@@ -58,16 +69,36 @@
                     <h3 class="text-xl font-bold mb-2">{{ formation.titre }}</h3>
                     <p class="text-gray-600 mb-4">{{ formation.description }}</p>
 
-                    {% if formation.points_cles %}
+                    {% comment %} {% if formation.points_cles %}
                     <ul class="text-left mb-4 list-disc list-inside text-gray-700">
                         {% for point in formation.get_points_list %}
                             <li>{{ point }}</li>
                         {% endfor %}
                     </ul>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                 </div>
             {% endfor %}
         </div>
+
+        <!-- Pagination -->
+        <nav class="mt-8 flex justify-center items-center space-x-2">
+            {% if formations_list.has_previous %}
+                <a href="?page={{ formations_list.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">&laquo; Précédent</a>
+            {% endif %}
+
+            {% for num in formations_list.paginator.page_range %}
+                {% if formations_list.number == num %}
+                    <span class="px-3 py-1 bg-indigo-600 text-white rounded">{{ num }}</span>
+                {% else %}
+                    <a href="?page={{ num }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if formations_list.has_next %}
+                <a href="?page={{ formations_list.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Suivant &raquo;</a>
+            {% endif %}
+        </nav>
+
         {% else %}
             <p class="text-center text-gray-500">Aucune formation disponible pour le moment.</p>
         {% endif %}

@@ -3,17 +3,25 @@
 
 {% block content %}
     {% include "navbar/navbar.html" %}
-    <section id="accueil" class="min-h-[60vh] flex flex-col justify-center items-center text-center bg-cover bg-center text-white w-full px-4 py-12 bg-[url('{% static "image/bg1.jpeg" %}')]">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold">
-            Des solutions technologiques innovantes
-        </h1>
-        <p class="text-sm sm:text-base md:text-lg lg:text-xl mt-3">
-            Découvrez nos produits et services révolutionnaires.
-        </p>
-        <button onclick="decouvrirProduits()" class="mt-4 w-3/4 md:w-1/2 lg:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded-lg text-base shadow-md transition duration-300">
-            Explorer
-        </button>
-    </section>
+<section id="accueil" class="min-h-[60vh] flex flex-col justify-center items-center text-center bg-cover bg-center text-white w-full px-4 py-12 bg-[url('{% static "image/bg1.jpeg" %}')]">
+    <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold">
+        Des solutions technologiques innovantes
+    </h1>
+    <p class="text-sm sm:text-base md:text-lg lg:text-xl mt-3">
+        Découvrez nos produits et services révolutionnaires.
+    </p>
+
+    {% comment %} <!-- Bouton Explorer existant -->
+    <button onclick="decouvrirProduits()" class="mt-4 w-3/4 md:w-1/2 lg:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded-lg text-base shadow-md transition duration-300">
+        Explorer
+    </button> {% endcomment %}
+
+    <!-- Nouveau bouton vers les formations -->
+    <a href="{% url 'formations' %}" class="mt-4 w-3/4 md:w-1/2 lg:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-5 rounded-lg text-base shadow-md transition duration-300">
+        Voir nos formations
+    </a>
+</section>
+
 
     <section class="py-16 bg-white">
       <div class="max-w-5xl mx-auto px-4 text-center">
@@ -292,30 +300,30 @@
       carouselGoTo(0);
     </script>
 
-    <section class="service py-10 bg-gray-100">
-    <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <img src="{% static 'image/py.png' %}" alt="Python" class="w-24 mx-auto mb-4">
-                <h5 class="text-xl font-semibold text-gray-800">Python</h5>
-                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
-            </div>
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <img src="{% static 'image/dj.png' %}" alt="Django" class="w-24 mx-auto mb-4">
-                <h5 class="text-xl font-semibold text-gray-800">Django</h5>
-                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
-            </div>
-            <div class="bg-white shadow-md rounded-lg p-6 text-center">
-                <img src="{% static 'image/ht.png' %}" alt="HTML5" class="w-24 mx-auto mb-4">
-                <h5 class="text-xl font-semibold text-gray-800">HTML5</h5>
-                <p class="text-gray-600">Nous utilisons notre propre approche pour rendre la programmation accessible à tous.</p>
-                <a href="#" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Voir plus</a>
-            </div>
+<section class="service py-10 bg-gray-100">
+    <div class="container mx-auto px-6 flex flex-col items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
+            {% for formation in formations %}
+                <div class="bg-white shadow-md rounded-lg p-6 text-center w-64">
+                    {% if formation.image %}
+                        <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-24 h-24 mx-auto mb-4 object-cover rounded">
+                    {% else %}
+                        <div class="w-24 h-24 bg-gray-200 mx-auto mb-4 flex items-center justify-center rounded">
+                            <span class="text-gray-400 text-sm">Pas d'image</span>
+                        </div>
+                    {% endif %}
+                    <h5 class="text-xl font-semibold text-gray-800">{{ formation.titre }}</h5>
+                    <p class="text-gray-600 mt-2">{{ formation.description }}</p>
+                </div>
+            {% endfor %}
         </div>
+
+        <a href="{% url 'formations' %}" class="mt-6 inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+            Voir plus
+        </a>
     </div>
 </section>
+
 
 {% include "footer/footer.html" %}
 {% endblock %}

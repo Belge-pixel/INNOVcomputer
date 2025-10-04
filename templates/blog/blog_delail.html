@@ -1,0 +1,97 @@
+<!-- Navbar simple -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-indigo-600">Blog<span class="text-gray-800">Détails</span></h1>
+      <nav class="space-x-4">
+        <a href="{% url 'block' %}" class="text-gray-700 hover:text-indigo-600">Accueil</a>
+        <a href="#" class="text-gray-700 hover:text-indigo-600">Articles</a>
+        <a href="#" class="text-gray-700 hover:text-indigo-600">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Image principale -->
+  <section class="relative">
+    <img src="{{ new.image.url }}" alt="Image de couverture" class="w-full h-96 object-cover brightness-75">
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+      <h2 class="text-4xl font-extrabold mb-3 drop-shadow-lg">{{ new.titre }}</h2>
+      <p class="text-sm opacity-90">Publié le <span class="font-semibold">{{ new.date|date:"d F Y" }}</span> • par <span class="font-semibold">{{ new.auteur }}</span></p>
+    </div>
+  </section>
+
+  <!-- Contenu principal -->
+  <main class="max-w-4xl mx-auto px-6 py-12 bg-white shadow-md rounded-2xl -mt-20 relative z-10">
+    <!-- Catégorie -->
+    <span class="inline-block px-3 py-1 text-sm text-indigo-700 bg-indigo-100 rounded-full mb-4">{{ new.categorie }}</span>
+
+    <!-- Titre -->
+    <h1 class="text-3xl font-bold mb-6 text-gray-900">{{ new.titre }}</h1>
+
+    <!-- Paragraphe principal -->
+    <p class="mb-6 text-gray-700 text-justify">
+      {{ new.description }}
+    </p>
+
+    <!-- Citation stylisée -->
+    {% if new.citation %}
+    <blockquote class="border-l-4 border-indigo-600 pl-6 italic text-gray-600 mb-8">
+      “{{ new.citation }}”
+    </blockquote>
+    {% endif %}
+
+    <!-- Image dans le contenu -->
+    {% if new.image_contenu %}
+    <img src="{{ new.image_contenu.url }}" alt="Travail serein" class="rounded-2xl shadow-lg mb-8">
+    {% endif %}
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mb-10">
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">#bienêtre</span>
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">#slowlife</span>
+      <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">#conscience</span>
+    </div>
+
+    <!-- Section commentaires -->
+    <div class="border-t pt-8">
+      <h3 class="text-2xl font-semibold mb-6">Commentaires</h3>
+
+      <!-- Commentaire exemple -->
+      <div class="mb-6 flex space-x-4">
+        <img src="https://i.pravatar.cc/60?img=1" alt="Avatar" class="w-12 h-12 rounded-full shadow">
+        <div>
+          <h4 class="font-semibold">Sophie L.</h4>
+          <p class="text-gray-600 text-sm mb-1">Il y a 2 heures</p>
+          <p class="text-gray-700">Merci pour cet article inspirant ! J’essaie justement de ralentir et c’est difficile, mais ça en vaut la peine.</p>
+        </div>
+      </div>
+
+      <div class="mb-6 flex space-x-4">
+        <img src="https://i.pravatar.cc/60?img=2" alt="Avatar" class="w-12 h-12 rounded-full shadow">
+        <div>
+          <h4 class="font-semibold">David M.</h4>
+          <p class="text-gray-600 text-sm mb-1">Il y a 1 jour</p>
+          <p class="text-gray-700">Très beau texte, j’aime la citation sur le fait de gagner du temps en ralentissant.</p>
+        </div>
+      </div>
+
+      <!-- Formulaire de commentaire -->
+      <form class="mt-8">
+        <label class="block mb-2 font-semibold">Laissez un commentaire</label>
+        <textarea class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="4" placeholder="Votre message..."></textarea>
+        <button type="submit" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">Publier</button>
+      </form>
+    </div>
+  </main>
+          <p class="text-gray-600 text-sm mb-1">Il y a 1 jour</p>
+          <p class="text-gray-700">Très beau texte, j’aime la citation sur le fait de gagner du temps en ralentissant.</p>
+        </div>
+      </div>
+
+      <!-- Formulaire de commentaire -->
+      <form class="mt-8">
+        <label class="block mb-2 font-semibold">Laissez un commentaire</label>
+        <textarea class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="4" placeholder="Votre message..."></textarea>
+        <button type="submit" class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">Publier</button>
+      </form>
+    </div>
+  </main>

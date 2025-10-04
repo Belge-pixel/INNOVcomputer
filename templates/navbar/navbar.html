@@ -27,7 +27,9 @@
       <li>
         <a href="{% url 'contact' %}" class="hover:text-orange-500">Contact</a>
       </li>
-      <li><a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a></li>
+      <li>
+        <a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a>
+      </li>
       {% if user.is_staff %}
       <li>
         <a href="{% url 'tresorerie' %}" class="hover:text-orange-500"
@@ -94,7 +96,9 @@
       <li>
         <a href="{% url 'contact' %}" class="hover:text-orange-500">Contact</a>
       </li>
-      <li><a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a></li>
+      <li>
+        <a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a>
+      </li>
 
       {% if user.is_staff %}
       <li>
@@ -145,4 +149,40 @@
       menu.classList.toggle("scale-95");
     });
   });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuButton = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+
+    menuButton.addEventListener("click", function () {
+      const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", !isExpanded);
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("scale-100");
+      menu.classList.toggle("scale-95");
+    });
+    // Fermer le menu lorsqu'on clique en dehors
+    document.addEventListener("click", function (event) {
+      if (
+        !menu.contains(event.target) &&
+        !menuButton.contains(event.target) &&
+        !menu.classList.contains("hidden")
+      ) {
+        menu.classList.add("hidden");
+        menu.classList.remove("scale-100");
+        menu.classList.add("scale-95");
+        menuButton.setAttribute("aria-expanded", "false");
+      }
+    });
+    // Animation au clic
+    menuButton.addEventListener("click", function () {
+      menu.classList.toggle("scale-100"); 
+      menu.classList.toggle("scale-95");
+      menu.classList.toggle("opacity-100");
+      menu.classList.toggle("opacity-0");
+      menu.classList.toggle("transition");
+      menu.classList.toggle("duration-200");
+      menu.classList.toggle("ease-in-out");
+      menu.classList.toggle("transform");
+    })})
 </script>

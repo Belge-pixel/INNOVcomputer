@@ -1,117 +1,64 @@
 {% extends "base_templates.html" %}
+
+{% load static %}
+
+{% block title %}Blog - Galerie Moderne{% endblock %}
+
 {% block content %}
-  {% include 'navbar/navbar.html' %}
+<!-- Header -->
+  <header class="text-center py-10 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+    <h1 class="text-4xl font-extrabold mb-2">Blog</h1>
+    <p class="text-lg opacity-90">Découvrez nos pensees</p>
+  </header>
 
-  <div class="bg-neutral-50 font-sans">
-
-    <!-- Bandeau d’introduction -->
-    <section class="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-teal-500 text-white py-32 px-6 shadow-xl">
-      <div class="absolute inset-0 bg-black opacity-30"></div>
-      <div class="relative max-w-5xl mx-auto text-center">
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight drop-shadow-lg">
-          Le Regard du Futur
-        </h1>
-        <p class="mt-6 text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
-          Un éclairage humain sur les révolutions technologiques et sociétales de demain.
-        </p>
+  <!-- Section des cartes -->
+  <section class="max-w-7xl mx-auto px-6 py-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {% for new in page_obj %}
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition transform hover:-translate-y-2">
+        <img src="{{ new.image.url }}" alt="{{ new.titre }}" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ new.titre }}</h2>
+          <p class="text-gray-600 text-sm mb-4">{{ new.description|truncatewords:20 }}</p>
+          <a href="{% url 'blog_detail' new.pk %}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Voir plus</a>
+        </div>
       </div>
-    </section>
+    {% endfor %}
+  </section>
 
-    <!-- Bouton pour afficher/masquer le formulaire -->
-    {% if user.is_staff %}
-    <div class="max-w-6xl mx-auto mt-10 px-6 text-center">
-      <button id="toggleFormButton"
-              class="bg-indigo-600 text-white px-8 py-4 rounded-2xl hover:bg-indigo-700 transition shadow-md text-lg font-semibold">
-        ➕ Ajouter une enquête
-      </button>
-    </div>
-
-    <!-- Formulaire -->
-    <div id="enqueteForm" class="max-w-4xl mx-auto mt-8 px-8 bg-white rounded-3xl shadow-2xl p-10 hidden transition-all">
-      <form method="POST" action="{% url 'blog' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input type="text" name="new_title" placeholder="Titre de l'article" required
-                 class="border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg"/>
-
-          <input type="file" name="new_image"
-                 class="border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg"/>
-
-          <textarea name="new_content" placeholder="Contenu de l'article" required
-                    class="col-span-1 md:col-span-2 border p-4 rounded-xl w-full focus:ring-indigo-500 focus:border-indigo-500 text-lg h-40"></textarea>
-        </div>
-        <div class="mt-8 text-center">
-          <button type="submit"
-                  class="bg-green-500 text-white px-8 py-4 rounded-2xl hover:bg-green-600 transition shadow-md text-lg font-semibold">
-            ✅ Publier l’article
-          </button>
-        </div>
-      </form>
-    </div>
-    {% endif %}
-
-    <!-- Section articles -->
-    <section class="max-w-7xl mx-auto py-20 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-      {% for article in articles %}
-      <article class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2 duration-300 flex flex-col">
-        <div class="relative">
-          {% if article.new_image %}
-          <img src="{{ article.new_image.url }}" alt="{{ article.new_title }}"
-               class="w-full h-60 object-cover object-center"/>
-          {% else %}
-          <div class="w-full h-60 bg-gradient-to-r from-indigo-100 to-teal-100 flex items-center justify-center text-gray-400 text-lg font-medium">
-            Pas d’image
-          </div>
-          {% endif %}
-          <div class="absolute bottom-3 left-3 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm shadow-md">
-            {{ article.new_publication_date }}
-          </div>
-        </div>
-        <div class="flex-1 p-6 flex flex-col">
-          <h2 class="text-2xl font-bold text-gray-900 mb-3">
-            <a href="" class="hover:text-indigo-600 transition">{{ article.new_title }}</a>
-          </h2>
-          <p class="text-gray-600 flex-1 leading-relaxed">{{ article.new_content|truncatewords:25 }}</p>
-          <div class="mt-6 text-right">
-            <a href="" class="inline-block bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl hover:bg-indigo-100 transition font-medium">
-              Lire la suite →
-            </a>
-          </div>
-        </div>
-      </article>
-      {% empty %}
-      <p class="text-gray-400 text-center text-lg col-span-full">🚀 Aucun article pour le moment.</p>
-      {% endfor %}
-    </section>
-
-    <!-- Pagination -->
-    <div class="flex justify-center space-x-2 mt-12">
-      {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">← Précédent</a>
-      {% endif %}
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <span class="px-5 py-2 bg-indigo-600 text-white rounded-xl shadow-md">{{ num }}</span>
+  <!-- Pagination -->
+  {% if page_obj.has_other_pages %}
+    <nav class="flex justify-center mt-8">
+      <ul class="inline-flex items-center -space-x-px">
+        {% if page_obj.has_previous %}
+          <li>
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Précédent</a>
+          </li>
         {% else %}
-          <a href="?page={{ num }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">{{ num }}</a>
+          <li>
+            <span class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-l-lg cursor-not-allowed">Précédent</span>
+          </li>
         {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}" class="px-5 py-2 bg-gray-200 rounded-xl hover:bg-gray-300">Suivant →</a>
-      {% endif %}
-    </div>
-
-  </div>
-
-  {% include 'footer/footer.html' %}
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const toggleButton = document.getElementById("toggleFormButton");
-      const formContainer = document.getElementById("enqueteForm");
-      toggleButton?.addEventListener("click", () => {
-        formContainer.classList.toggle("hidden");
-      });
-    });
-  </script>
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li>
+              <span class="px-3 py-2 leading-tight text-white bg-indigo-600 border border-gray-300">{{ num }}</span>
+            </li>
+          {% else %}
+            <li>
+              <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ num }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+          <li>
+            <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Suivant</a>
+          </li>
+        {% else %}
+          <li>
+            <span class="px-3 py-2 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-r-lg cursor-not-allowed">Suivant</span>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
 {% endblock %}

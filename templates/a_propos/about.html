@@ -34,48 +34,51 @@
 
 <section class="container mx-auto py-12">
   <h2 class="text-4xl font-bold text-center mb-8">Nos Formations</h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
-      <h5 class="text-xl font-semibold">Formation Python</h5>
-      <p class="mt-2 text-gray-700">Apprenez à programmer en Python, le langage de choix pour de nombreux domaines professionnels. Nos cours incluent des projets pratiques et des études de cas pour une meilleure compréhension.</p>
-    </div>
-    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
-      <h5 class="text-xl font-semibold">Développement Frontend</h5>
-      <p class="mt-2 text-gray-700">Maîtrisez les technologies comme HTML, CSS et JavaScript pour créer des interfaces utilisateur attrayantes. Nos formateurs vous guideront à travers des exercices pratiques et des projets réels.</p>
-    </div>
-    <div class="bg-white border rounded-lg p-6 shadow-md h-full transition-transform transform hover:scale-105">
-      <h5 class="text-xl font-semibold">Développement Backend</h5>
-      <p class="mt-2 text-gray-700">Découvrez les frameworks et les bases de données pour construire des applications robustes. Nous proposons des sessions pratiques pour vous aider à développer vos propres projets.</p>
-    </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    {% for formation in formations %}
+      <div class="bg-white border rounded-lg shadow-md p-6 flex flex-col h-full transform transition hover:scale-105">
+        {% if formation.image %}
+          <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-full h-40 object-cover rounded mb-4">
+        {% else %}
+          <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded mb-4">
+            <span class="text-gray-400 text-sm">Pas d'image</span>
+          </div>
+        {% endif %}
+        <h5 class="text-xl font-semibold mb-2">{{ formation.titre }}</h5>
+        <p class="text-gray-700 flex-grow">{{ formation.description|truncatechars:150 }}</p>
+      </div>
+    {% empty %}
+      <p class="text-gray-500 col-span-full text-center">Aucune formation disponible pour le moment.</p>
+    {% endfor %}
   </div>
-</section>
-
-<section class="text-center py-12 bg-gray-50">
-  <h4 class="text-3xl font-bold mb-6">Envie de Collaborer avec Nous ?</h4>
-  <p class="text-gray-700 mb-4">Rejoignez-nous dans notre mission d'éducation et d'autonomisation des jeunes. Ensemble, nous pouvons faire la différence.</p>
-  <a href="#" class="mt-4 inline-block bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition">Contactez-nous</a>
+  <div class="text-center mt-6">
+    <a href="{% url 'formations' %}" class="inline-block bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition">
+      Voir plus
+    </a>
+  </div>
 </section>
 
 <section class="container mx-auto py-12">
   <h2 class="text-4xl font-bold text-center mb-8">Notre Expertise</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-      <h5 class="text-xl font-semibold mb-2">Développement d’applications sur mesure</h5>
-      <p class="text-gray-700">Conception de solutions web et mobiles adaptées aux besoins réels de votre organisation. Nous collaborons étroitement avec vous pour garantir la satisfaction de vos utilisateurs.</p>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-      <h5 class="text-xl font-semibold mb-2">Consulting IT et transformation numérique</h5>
-      <p class="text-gray-700">Conseil stratégique et accompagnement dans la digitalisation de vos processus métiers. Notre équipe d'experts vous aide à naviguer dans le paysage numérique actuel.</p>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-      <h5 class="text-xl font-semibold mb-2">Formation professionnelle</h5>
-      <p class="text-gray-700">Ateliers et sessions personnalisées pour renforcer les compétences de vos équipes. Nous adaptons notre contenu de formation à vos besoins spécifiques.</p>
-    </div>
-    <div class="bg-blue-600 text-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
-      <h5 class="text-xl font-semibold mb-2">Accompagnement personnalisé</h5>
-      <p>Un service exclusif réservé aux membres inscrits, pour un suivi humain, stratégique et opérationnel. Nous garantissons un accompagnement sur mesure pour chaque entreprise.</p>
-    </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for expertise in expertises %}
+      <div class="bg-white rounded-lg shadow-md p-6 flex flex-col text-center hover:shadow-xl transition transform hover:scale-105">
+        {% if expertise.image %}
+          <img src="{{ expertise.image.url }}" alt="{{ expertise.titre }}" class="w-full h-32 object-cover rounded mb-4">
+        {% else %}
+          <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded mb-4 text-indigo-600 text-5xl">
+            <i class="{{ expertise.icone }}"></i>
+          </div>
+        {% endif %}
+        <h5 class="text-xl font-semibold mb-2">{{ expertise.titre }}</h5>
+        <p class="text-gray-700 flex-grow">{{ expertise.description|truncatechars:120 }}</p>
+      </div>
+    {% empty %}
+      <p class="text-gray-500 col-span-full text-center">Aucune expertise disponible pour le moment.</p>
+    {% endfor %}
   </div>
 </section>
+
+
 {% include "footer/footer.html" %}
 {% endblock %}

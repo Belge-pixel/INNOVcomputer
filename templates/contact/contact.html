@@ -3,6 +3,7 @@
 
 {% block content %}
 {% include 'navbar/navbar.html' %}
+
 <section class="bg-gradient-to-r from-indigo-600 to-teal-500 text-white py-16">
   <div class="container mx-auto px-4 text-center">
     <h1 class="text-4xl font-bold mb-2">Un projet ? Une question ?</h1>
@@ -17,13 +18,16 @@
     <div class="space-y-4 text-gray-700">
       <p><span class="font-semibold">📍 Adresse :</span> 123 Rue de l'Innovation, 75000 Paris</p>
       <p><span class="font-semibold">📞 Téléphone :</span> +33 1 23 45 67 89</p>
-      <p><span class="font-semibold">📧 Email :</span>innovcomputer@gmail.com</p>
+      <p><span class="font-semibold">📧 Email :</span> innovcomputer@gmail.com</p>
     </div>
 
     <div class="mt-10">
-      <h3 class="text-xl font-semibold text-gray-800 mb-3">Plan d'accès</h3>
-      <div class="rounded-lg overflow-hidden shadow-md h-64">
-        <iframe class="w-full h-full" src="https://maps.google.com/maps?q=123%20Rue%20de%20l'Innovation,%2075000%20Paris&output=embed" allowfullscreen></iframe>
+      <h3 class="text-xl font-semibold text-gray-800 mb-3">Votre position actuelle</h3>
+      <div class="rounded-lg overflow-hidden shadow-md h-64 relative">
+        <iframe id="map" class="w-full h-full border-0"></iframe>
+        <div id="map-error" class="absolute inset-0 flex items-center justify-center bg-white/80 text-gray-700 hidden">
+          Impossible de récupérer votre position.
+        </div>
       </div>
     </div>
   </div>
@@ -54,5 +58,32 @@
     </form>
   </div>
 </section>
+
 {% include 'footer/footer.html' %}
+
+<!-- ✅ Script de géolocalisation -->
+<script>
+  const map = document.getElementById("map");
+  const mapError = document.getElementById("map-error");
+
+  // Vérifie que le navigateur supporte la géolocalisation
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Affiche la carte centrée sur la position
+        map.src = `https://www.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+      },
+      (error) => {
+        console.error("Erreur de géolocalisation :", error);
+        mapError.classList.remove("hidden");
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  } else {
+    mapError.classList.remove("hidden");
+  }
+</script>
 {% endblock %}

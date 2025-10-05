@@ -1,64 +1,73 @@
 {% extends "base_templates.html" %}
-
 {% load static %}
 
-{% block title %}Blog - Galerie Moderne{% endblock %}
+{% block title %}Blog - InnovComputer{% endblock %}
 
 {% block content %}
+{% include "navbar/navbar.html" %}
 <!-- Header -->
-  <header class="text-center py-10 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
-    <h1 class="text-4xl font-extrabold mb-2">Blog</h1>
-    <p class="text-lg opacity-90">Découvrez nos pensees</p>
-  </header>
+<header class="text-center py-10 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+  <h1 class="text-4xl font-extrabold mb-2">Blog</h1>
+  <p class="text-lg opacity-90">Découvrez nos pensées</p>
+  <a href="{% url 'blog_form' %}" class="inline-block bg-white text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-50 transition">
+    Créer un nouvel article
+  </a>
+</header>
 
-  <!-- Section des cartes -->
-  <section class="max-w-7xl mx-auto px-6 py-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-    {% for new in page_obj %}
-      <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition transform hover:-translate-y-2">
-        <img src="{{ new.image.url }}" alt="{{ new.titre }}" class="w-full h-56 object-cover">
-        <div class="p-6">
-          <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ new.titre }}</h2>
-          <p class="text-gray-600 text-sm mb-4">{{ new.description|truncatewords:20 }}</p>
-          <a href="{% url 'blog_detail' new.pk %}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Voir plus</a>
-        </div>
+<!-- Section des cartes -->
+<section class="max-w-7xl mx-auto px-6 py-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {% for new in page_obj %}
+    <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transition transform hover:-translate-y-2">
+      <img src="{{ new.new_image.url }}" alt="{{ new.new_title }}" class="w-full h-56 object-cover">
+      <div class="p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ new.new_title }}</h2>
+        <p class="text-gray-600 text-sm mb-4">{{ new.new_content|truncatewords:20 }}</p>
+        <a href="{% url 'blog_detail' new.pk %}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+          Voir plus
+        </a>
       </div>
-    {% endfor %}
-  </section>
+    </div>
+  {% empty %}
+    <p class="text-center text-gray-500 col-span-full">Aucun article publié pour le moment.</p>
+  {% endfor %}
+</section>
 
-  <!-- Pagination -->
-  {% if page_obj.has_other_pages %}
-    <nav class="flex justify-center mt-8">
-      <ul class="inline-flex items-center -space-x-px">
-        {% if page_obj.has_previous %}
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+  <nav class="flex justify-center mt-8">
+    <ul class="inline-flex items-center -space-x-px">
+      {% if page_obj.has_previous %}
+        <li>
+          <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Précédent</a>
+        </li>
+      {% else %}
+        <li>
+          <span class="px-3 py-2 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-l-lg cursor-not-allowed">Précédent</span>
+        </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
           <li>
-            <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Précédent</a>
+            <span class="px-3 py-2 leading-tight text-white bg-indigo-600 border border-gray-300">{{ num }}</span>
           </li>
         {% else %}
           <li>
-            <span class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-l-lg cursor-not-allowed">Précédent</span>
+            <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ num }}</a>
           </li>
         {% endif %}
-        {% for num in page_obj.paginator.page_range %}
-          {% if page_obj.number == num %}
-            <li>
-              <span class="px-3 py-2 leading-tight text-white bg-indigo-600 border border-gray-300">{{ num }}</span>
-            </li>
-          {% else %}
-            <li>
-              <a href="?page={{ num }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ num }}</a>
-            </li>
-          {% endif %}
-        {% endfor %}
-        {% if page_obj.has_next %}
-          <li>
-            <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Suivant</a>
-          </li>
-        {% else %}
-          <li>
-            <span class="px-3 py-2 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-r-lg cursor-not-allowed">Suivant</span>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-  {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li>
+          <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Suivant</a>
+        </li>
+      {% else %}
+        <li>
+          <span class="px-3 py-2 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-r-lg cursor-not-allowed">Suivant</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
 {% endblock %}

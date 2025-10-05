@@ -28,6 +28,9 @@
         <a href="{% url 'contact' %}" class="hover:text-orange-500">Contact</a>
       </li>
       <li>
+        <a href="{% url 'expertise' %}" class="hover:text-indigo-500 transition">Expertise</a>
+      </li>
+      <li>
         <a href="{% url 'blog' %}" class="hover:text-orange-500">Blog</a>
       </li>
       {% if user.is_staff %}

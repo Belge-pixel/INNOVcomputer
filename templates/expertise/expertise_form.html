@@ -30,6 +30,9 @@
             <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-500 transition">
                 {% if form.instance.pk %}Mettre à jour{% else %}Ajouter{% endif %}
             </button>
+            <a href="{% url 'expertise' %}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-500 transition">
+                Retourner sur la page des expertises
+            </a>
         </div>
     </form>
 </section>

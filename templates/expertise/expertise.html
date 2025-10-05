@@ -18,11 +18,13 @@
   <div class="max-w-6xl mx-auto px-4">
 
     <!-- Bouton Ajouter Expertise -->
+    {% if user.is_staff %}
     <div class="text-center mb-8">
       <a href="{% url 'expertise_create' %}" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-500 transition">
         Ajouter une expertise
       </a>
     </div>
+    {% endif %}
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       {% for e in expertises %}
@@ -36,13 +38,39 @@
         {% endif %}
         <div class="p-6 text-center">
           <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ e.titre }}</h3>
-          <p class="text-gray-600">{{ e.description }}</p>
+          <p class="text-gray-600 text-justify description">
+            {{ e.description|truncatechars:120 }}
+          </p>
+          {% if e.description|length > 120 %}
+          <button class="mt-2 text-indigo-600 font-medium hover:text-indigo-800 see-more-btn" data-full="{{ e.description|escapejs }}">
+            Voir plus
+          </button>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const buttons = document.querySelectorAll(".see-more-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const p = btn.previousElementSibling;
+      if (btn.innerText === "Voir plus") {
+        p.innerText = btn.dataset.full;
+        btn.innerText = "Voir moins";
+      } else {
+        p.innerText = btn.dataset.full.substring(0, 120) + "...";
+        btn.innerText = "Voir plus";
+      }
+    });
+  });
+});
+</script>
 
 {% include "footer/footer.html" %}
 {% endblock %}

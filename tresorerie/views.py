@@ -36,9 +36,9 @@ def tresorerie(request):
     try:
         per_page = int(per_page)
         if per_page <= 0:
-            per_page = 10
+            per_page = 5
     except:
-        per_page = 10
+        per_page = 5
 
     if filtre_type:
         transactions_queryset = transactions_queryset.filter(type_transaction__iexact=filtre_type)

@@ -3,75 +3,95 @@
 
 {% block content %}
 {% include "navbar/navbar.html" %}
-<section class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-16">
-  <div class="container mx-auto text-center">
-    <h1 class="text-5xl font-extrabold">Former les Jeunes aux Technologies de Demain</h1>
-    <p class="mt-4 text-lg">Notre mission est de doter la jeunesse des compétences nécessaires dans le domaine de l'informatique.</p>
-    <a href="#" class="mt-6 inline-block bg-white text-green-600 py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition">Découvrez nos formations</a>
+
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-green-400 to-blue-500 text-white py-20">
+  <div class="container mx-auto text-center px-4">
+    <h1 class="text-5xl font-extrabold leading-tight">Former les Jeunes aux Technologies de Demain</h1>
+    <p class="mt-6 text-lg max-w-2xl mx-auto leading-relaxed">Notre mission est de doter la jeunesse des compétences nécessaires dans le domaine de l'informatique.</p>
+    <a href="{% url 'formations' %}" class="mt-8 inline-block bg-white text-green-600 py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition duration-300 font-medium">
+      Découvrez nos formations
+    </a>
   </div>
 </section>
 
-<section class="bg-gray-50 py-12">
-  <div class="container mx-auto text-center">
-    <h2 class="text-4xl font-bold text-blue-600 mb-8">Qui Sommes-Nous ?</h2>
-    <p class="text-gray-700 mb-4 max-w-2xl mx-auto leading-relaxed">Nous sommes une entreprise dédiée à l'éducation et à l'autonomisation des jeunes à travers des formations en technologies numériques. Avec une équipe d'experts passionnés, nous nous engageons à offrir des programmes de formation de haute qualité qui répondent aux besoins du marché.</p>
-    <p class="text-gray-700 mb-4 max-w-2xl mx-auto leading-relaxed">Notre approche est centrée sur l'apprentissage pratique, permettant aux étudiants d'acquérir des compétences directement applicables dans le monde professionnel.</p>
-    <p class="text-gray-700 max-w-2xl mx-auto leading-relaxed">Nous croyons en l'importance de l'éducation et de l'innovation pour transformer notre société et offrir des opportunités à la jeunesse.</p>
+<!-- Qui Sommes-Nous Section -->
+<section class="bg-gray-50 py-16">
+  <div class="container mx-auto px-4 max-w-5xl text-justify space-y-6">
+    <h2 class="text-4xl font-bold text-blue-600 text-center mb-8">Qui Sommes-Nous ?</h2>
+    <p class="text-gray-700 leading-relaxed">Nous sommes une entreprise dédiée à l'éducation et à l'autonomisation des jeunes à travers des formations en technologies numériques. Avec une équipe d'experts passionnés, nous nous engageons à offrir des programmes de formation de haute qualité qui répondent aux besoins du marché.</p>
+    <p class="text-gray-700 leading-relaxed">Notre approche est centrée sur l'apprentissage pratique, permettant aux étudiants d'acquérir des compétences directement applicables dans le monde professionnel.</p>
+    <p class="text-gray-700 leading-relaxed">Nous croyons en l'importance de l'éducation et de l'innovation pour transformer notre société et offrir des opportunités à la jeunesse.</p>
   </div>
 </section>
 
-<section class="bg-white py-12 shadow-lg">
-  <div class="container mx-auto text-center">
-    <h2 class="text-4xl font-bold text-blue-600 mb-8">Nos Objectifs</h2>
-    <ul class="list-disc list-inside text-gray-700 mx-auto max-w-2xl space-y-2">
-      <li class="text-lg">Former des professionnels qualifiés dans les technologies de l'information, prêts à répondre aux défis actuels.</li>
-      <li class="text-lg">Encourager l'innovation et la créativité chez les jeunes pour les préparer à un avenir numérique.</li>
-      <li class="text-lg">Promouvoir l'accès à l'éducation numérique pour toutes et tous, quelle que soit leur origine.</li>
-      <li class="text-lg">Accompagner les entreprises dans leur transformation numérique, en fournissant des solutions adaptées et des conseils stratégiques.</li>
+<!-- Nos Objectifs Section -->
+<section class="bg-white py-16 shadow-inner">
+  <div class="container mx-auto px-4 max-w-4xl text-center">
+    <h2 class="text-4xl font-bold text-blue-600 mb-10">Nos Objectifs</h2>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700 text-left">
+      <li class="bg-white border rounded-xl p-4 shadow hover:shadow-lg transition transform hover:scale-105">
+        <p class="text-lg">Former des professionnels qualifiés dans les technologies de l'information, prêts à répondre aux défis actuels.</p>
+      </li>
+      <li class="bg-white border rounded-xl p-4 shadow hover:shadow-lg transition transform hover:scale-105">
+        <p class="text-lg">Encourager l'innovation et la créativité chez les jeunes pour les préparer à un avenir numérique.</p>
+      </li>
+      <li class="bg-white border rounded-xl p-4 shadow hover:shadow-lg transition transform hover:scale-105">
+        <p class="text-lg">Promouvoir l'accès à l'éducation numérique pour toutes et tous, quelle que soit leur origine.</p>
+      </li>
+      <li class="bg-white border rounded-xl p-4 shadow hover:shadow-lg transition transform hover:scale-105">
+        <p class="text-lg">Accompagner les entreprises dans leur transformation numérique, en fournissant des solutions adaptées et des conseils stratégiques.</p>
+      </li>
     </ul>
   </div>
 </section>
 
-<section class="container mx-auto py-12">
-  <h2 class="text-4xl font-bold text-center mb-8">Nos Formations</h2>
+<!-- Nos Formations Section -->
+<section class="container mx-auto py-16 px-4">
+  <h2 class="text-4xl font-bold text-center mb-12">Nos Formations</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
     {% for formation in formations %}
-      <div class="bg-white border rounded-lg shadow-md p-6 flex flex-col h-full transform transition hover:scale-105">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition transform hover:scale-105 group">
         {% if formation.image %}
-          <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-full h-40 object-cover rounded mb-4">
+          <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-full h-48 object-cover rounded-t-lg">
         {% else %}
-          <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded mb-4">
-            <span class="text-gray-400 text-sm">Pas d'image</span>
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-sm rounded-t-lg">
+            Pas d'image
           </div>
         {% endif %}
-        <h5 class="text-xl font-semibold mb-2">{{ formation.titre }}</h5>
-        <p class="text-gray-700 flex-grow">{{ formation.description|truncatechars:150 }}</p>
+        <div class="p-6 flex flex-col flex-grow justify-between text-justify">
+          <h5 class="text-xl font-semibold mb-3">{{ formation.titre }}</h5>
+          <p class="text-gray-700 mb-4 leading-relaxed line-clamp-3">{{ formation.description }}</p>
+          {% if formation.description|length > 150 %}
+          <button class="toggleBtn text-indigo-600 mt-auto font-medium text-sm self-start transition hover:underline">Voir plus</button>
+          {% endif %}
+          <a href="{% url 'formations' %}" class="mt-4 inline-block text-center bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">Voir plus</a>
+        </div>
       </div>
     {% empty %}
       <p class="text-gray-500 col-span-full text-center">Aucune formation disponible pour le moment.</p>
     {% endfor %}
   </div>
-  <div class="text-center mt-6">
-    <a href="{% url 'formations' %}" class="inline-block bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition">
-      Voir plus
-    </a>
-  </div>
 </section>
 
-<section class="container mx-auto py-12">
-  <h2 class="text-4xl font-bold text-center mb-8">Notre Expertise</h2>
+<!-- Notre Expertise Section -->
+<section class="container mx-auto py-16 px-4">
+  <h2 class="text-4xl font-bold text-center mb-12">Notre Expertise</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
     {% for expertise in expertises %}
-      <div class="bg-white rounded-lg shadow-md p-6 flex flex-col text-center hover:shadow-xl transition transform hover:scale-105">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center text-center hover:shadow-2xl transition transform hover:scale-105 p-6 group">
         {% if expertise.image %}
-          <img src="{{ expertise.image.url }}" alt="{{ expertise.titre }}" class="w-full h-32 object-cover rounded mb-4">
+          <img src="{{ expertise.image.url }}" alt="{{ expertise.titre }}" class="w-full h-36 object-cover rounded mb-4">
         {% else %}
-          <div class="w-full h-32 bg-gray-200 flex items-center justify-center rounded mb-4 text-indigo-600 text-5xl">
+          <div class="w-full h-36 bg-gray-200 flex items-center justify-center rounded mb-4 text-indigo-600 text-5xl">
             <i class="{{ expertise.icone }}"></i>
           </div>
         {% endif %}
         <h5 class="text-xl font-semibold mb-2">{{ expertise.titre }}</h5>
-        <p class="text-gray-700 flex-grow">{{ expertise.description|truncatechars:120 }}</p>
+        <p class="text-gray-700 leading-relaxed line-clamp-3 text-justify">{{ expertise.description }}</p>
+        {% if expertise.description|length > 120 %}
+        <button class="toggleBtn text-indigo-600 mt-2 font-medium text-sm self-center transition hover:underline">Voir plus</button>
+        {% endif %}
       </div>
     {% empty %}
       <p class="text-gray-500 col-span-full text-center">Aucune expertise disponible pour le moment.</p>
@@ -79,6 +99,35 @@
   </div>
 </section>
 
-
 {% include "footer/footer.html" %}
+
+<!-- JS pour Voir Plus / Voir Moins -->
+<script>
+document.querySelectorAll('.toggleBtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const desc = btn.previousElementSibling;
+    if(desc.classList.contains('line-clamp-3')){
+      desc.classList.remove('line-clamp-3');
+      btn.textContent = 'Voir moins';
+    } else {
+      desc.classList.add('line-clamp-3');
+      btn.textContent = 'Voir plus';
+    }
+  });
+});
+</script>
+
+<!-- Style type YouTube -->
+<style>
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limite à 3 lignes */
+  -webkit-box-orient: vertical;
+}
+.group:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+</style>
 {% endblock %}

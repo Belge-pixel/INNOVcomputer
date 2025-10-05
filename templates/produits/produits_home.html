@@ -14,7 +14,12 @@
         <option value="matériel">Matériels</option>
       </select>
       <input type="text" name="search" placeholder="Recherche..." class="border border-gray-300 p-3 rounded-md" />
-      <button class="bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition">🔍 Filtrer</button>
+      <button class="bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1012 19.5a7.5 7.5 0 004.65-2.85z"/>
+        </svg>
+        Filtrer
+      </button>
     </form>
 
     <!-- Grille produits -->
@@ -24,11 +29,13 @@
         {% if produit.image_produit %}
         <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}" class="w-full h-48 object-cover" />
         {% else %}
-        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-          Pas d'image
+        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-2xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18V3H3zm3 9l4 4 8-8"/>
+          </svg>
         </div>
         {% endif %}
-        <div class="p-6">
+        <div class="p-6 text-justify">
           <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ produit.nom_produit }}</h2>
           <p class="text-sm text-gray-600 mb-4 leading-relaxed">{{ produit.description_produit }}</p>
 
@@ -51,8 +58,11 @@
           </table>
 
           {% if not user.is_staff %}
-          <button type="button" onclick="toggleForm('devis')" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
-            💬 Demander un devis →
+          <button type="button" onclick="toggleForm('devis')" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m2 8a9 9 0 11-6.75-16.5L5 20l6-4 4 2z"/>
+            </svg>
+            Demander un devis
           </button>
           {% endif %}
         </div>
@@ -64,9 +74,13 @@
     <div class="flex justify-center mt-12 gap-2">
       {% if produits.has_previous %}
         <a href="?page={{ produits.previous_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">← Précédent</a>
+           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+           </svg>
+           Précédent
+        </a>
       {% endif %}
-
       {% for num in produits.paginator.page_range %}
         {% if produits.number == num %}
           <span class="px-4 py-2 bg-indigo-600 text-white rounded">{{ num }}</span>
@@ -75,21 +89,29 @@
              class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
         {% endif %}
       {% endfor %}
-
       {% if produits.has_next %}
         <a href="?page={{ produits.next_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Suivant →</a>
+           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+           Suivant
+           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+           </svg>
+        </a>
       {% endif %}
     </div>
 
-    <!-- Bouton et formulaire ajout produit pour admins -->
+    <!-- Bouton Ajouter produit -->
     {% if user.is_staff %}
     <div class="text-center mt-12">
-      <button type="button" onclick="toggleForm('adminForm')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition">
-        ➕ Ajouter un produit
+      <button type="button" onclick="toggleForm('adminForm')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Ajouter un produit
       </button>
     </div>
 
+    <!-- Formulaire Admin -->
     <section id="adminForm" class="hidden bg-gray-50 py-16 px-6 mt-6">
       <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
         <form method="POST" enctype="multipart/form-data" class="grid gap-6" action="{% url 'produits' %}">
@@ -103,41 +125,15 @@
           <input name="licence_produit" type="text" placeholder="Licence" class="border p-3 rounded w-full" />
           <input name="categorie_produit" type="text" placeholder="Catégorie" class="border p-3 rounded w-full" />
           <input type="file" name="image_produit" class="border p-2 rounded w-full" />
-          <button type="submit" class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium">
+          <button type="submit" class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
             Ajouter le produit
           </button>
         </form>
       </div>
     </section>
-    {% endif %}
-
-    <!-- Bouton et formulaire demande de devis pour clients -->
-    {% if not user.is_staff %}
-    <div class="text-center mt-12">
-      <button type="button" onclick="toggleForm('devis')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition">
-        💬 Demander un devis
-      </button>
-    </div>
-
-    <div id="devis" class="hidden mt-12 max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
-      <form method="post" class="grid gap-6">
-        {% csrf_token %}
-        <div class="grid md:grid-cols-2 gap-4">
-          <input name="nom_customer_demane_devis" type="text" placeholder="Votre nom" class="border p-3 rounded w-full" />
-          <input name="mail_customer_demande_devis" type="email" placeholder="Votre email" class="border p-3 rounded w-full" />
-        </div>
-        <select name="produi_demande_devis" class="border p-3 rounded w-full">
-          <option value="">Sélectionnez un produit</option>
-          {% for produit in produits %}
-          <option value="{{ produit.id }}">{{ produit.nom_produit }}</option>
-          {% endfor %}
-        </select>
-        <textarea name="message_demande_devis" rows="4" placeholder="Votre message..." class="border p-3 rounded w-full"></textarea>
-        <button class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium">
-          Envoyer ma demande
-        </button>
-      </form>
-    </div>
     {% endif %}
 
   </div>
@@ -147,11 +143,9 @@
 <script>
 function toggleForm(id) {
   const form = document.getElementById(id);
-  if (form.classList.contains('hidden')) {
-    form.classList.remove('hidden');
+  form.classList.toggle('hidden');
+  if (!form.classList.contains('hidden')) {
     form.scrollIntoView({ behavior: 'smooth' });
-  } else {
-    form.classList.add('hidden');
   }
 }
 </script>

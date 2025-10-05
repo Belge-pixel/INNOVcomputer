@@ -9,9 +9,14 @@
 <header class="text-center py-10 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
   <h1 class="text-4xl font-extrabold mb-2">Blog</h1>
   <p class="text-lg opacity-90">Découvrez nos pensées</p>
+
+  {% if user.is_staff %}
   <a href="{% url 'blog_form' %}" class="inline-block bg-white text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-50 transition">
     Créer un nouvel article
   </a>
+  {% endif %}
+
+
 </header>
 
 <!-- Section des cartes -->

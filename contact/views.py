@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from .models import Contact
 import urllib.parse
+import requests
 
 # Liste des numéros WhatsApp destinataires
 WHATSAPP_NUMBERS = [
@@ -31,7 +32,7 @@ def contact(request):
             whatsapp_text_encoded = urllib.parse.quote(whatsapp_text)
 
             # Créer les liens WhatsApp pour chaque numéro
-            whatsapp_links = [f"https://api.callmebot.com/whatsapp.php?phone={number}&text={whatsapp_text_encoded}&apikey=VOTRE_CLE_API" for number in WHATSAPP_NUMBERS]
+            whatsapp_links = [f"https://api.callmebot.com/whatsapp.php?phone={number}&text={whatsapp_text_encoded}&apikey=5601173" for number in WHATSAPP_NUMBERS]
 
             # Envoyer le message via l'API CallMeBot
             for link in whatsapp_links:

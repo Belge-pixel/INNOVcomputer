@@ -2,7 +2,7 @@
 {% block content %}
 {% include "navbar/navbar.html" %}
 
-<section class="bg-gradient-to-b from-white via-gray-50 to-white py-20 px-6">
+<section class="bg-gray-50 py-16 px-6">
   <div class="max-w-7xl mx-auto">
     <h1 class="text-4xl font-bold text-gray-900 mb-12 text-center tracking-tight">Nos Produits & Services</h1>
 
@@ -23,64 +23,73 @@
     </form>
 
     <!-- Grille produits -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for produit in produits %}
-      <div class="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
-        {% if produit.image_produit %}
-        <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}" class="w-full h-48 object-cover" />
-        {% else %}
-        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-2xl">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18V3H3zm3 9l4 4 8-8"/>
-          </svg>
+      <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-1 hover:scale-105 overflow-hidden flex flex-col relative">
+        
+        <!-- Badge catégorie -->
+        <div class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full font-semibold">
+          {{ produit.categorie_produit }}
         </div>
-        {% endif %}
-        <div class="p-6 text-justify">
-          <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ produit.nom_produit }}</h2>
-          <p class="text-sm text-gray-600 mb-4 leading-relaxed">{{ produit.description_produit }}</p>
 
-          <!-- Caractéristiques -->
-          <table class="w-full text-sm text-left mb-4">
-            <tbody>
-              <tr class="border-b">
-                <th class="py-1 pr-4 text-gray-500">Version</th>
-                <td class="py-1">{{ produit.version_produit }}</td>
-              </tr>
-              <tr class="border-b">
-                <th class="py-1 pr-4 text-gray-500">Compatibilité</th>
-                <td class="py-1">{{ produit.compatibilite_produit }}</td>
-              </tr>
-              <tr>
-                <th class="py-1 pr-4 text-gray-500">Licence</th>
-                <td class="py-1">{{ produit.licence_produit }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          {% if not user.is_staff %}
-          <button type="button" onclick="toggleForm('devis')" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m2 8a9 9 0 11-6.75-16.5L5 20l6-4 4 2z"/>
+        <!-- Image produit -->
+        <div class="relative w-full h-56 overflow-hidden">
+          {% if produit.image_produit %}
+          <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}" 
+               class="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-110" />
+          {% else %}
+          <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-4xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18V3H3zm3 9l4 4 8-8"/>
             </svg>
-            Demander un devis
-          </button>
+          </div>
           {% endif %}
+        </div>
+
+        <!-- Contenu -->
+        <div class="p-6 flex flex-col justify-between flex-1">
+          <div>
+            <h2 class="text-lg font-semibold text-gray-900 mb-2">{{ produit.nom_produit }}</h2>
+            <p class="text-gray-500 text-sm mb-4 line-clamp-3">{{ produit.description_produit }}</p>
+          </div>
+
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-indigo-600 font-bold text-lg">{{ produit.prix_produit|default:"€99" }}</span>
+            <span class="text-sm text-gray-400">{{ produit.version_produit }}</span>
+          </div>
+
+          <!-- Boutons Voir et Supprimer -->
+          <div class="flex gap-2 mt-auto">
+            <a href="{% url 'produit_detail' produit.id %}" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition font-medium text-sm text-center">
+              Voir
+            </a>
+
+            {% if user.is_staff %}
+            <form method="POST" action="{% url 'produit_supprimer' produit.id %}" class="flex-1">
+              {% csrf_token %}
+              <button type="submit" class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition font-medium text-sm">
+                Supprimer
+              </button>
+            </form>
+            {% endif %}
+          </div>
         </div>
       </div>
       {% endfor %}
     </div>
 
     <!-- Pagination -->
-    <div class="flex justify-center mt-12 gap-2">
+    <div class="flex justify-center mt-12 gap-2 flex-wrap">
       {% if produits.has_previous %}
-        <a href="?page={{ produits.previous_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
-           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-           </svg>
-           Précédent
-        </a>
+      <a href="?page={{ produits.previous_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+         class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+         </svg>
+         Précédent
+      </a>
       {% endif %}
+
       {% for num in produits.paginator.page_range %}
         {% if produits.number == num %}
           <span class="px-4 py-2 bg-indigo-600 text-white rounded">{{ num }}</span>
@@ -89,29 +98,20 @@
              class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
         {% endif %}
       {% endfor %}
+
       {% if produits.has_next %}
-        <a href="?page={{ produits.next_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
-           class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
-           Suivant
-           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-           </svg>
-        </a>
+      <a href="?page={{ produits.next_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+         class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+         Suivant
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+         </svg>
+      </a>
       {% endif %}
     </div>
 
-    <!-- Bouton Ajouter produit -->
-    {% if user.is_staff %}
-    <div class="text-center mt-12">
-      <button type="button" onclick="toggleForm('adminForm')" class="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-        </svg>
-        Ajouter un produit
-      </button>
-    </div>
-
     <!-- Formulaire Admin -->
+    {% if user.is_staff %}
     <section id="adminForm" class="hidden bg-gray-50 py-16 px-6 mt-6">
       <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
         <form method="POST" enctype="multipart/form-data" class="grid gap-6" action="{% url 'produits' %}">
@@ -126,9 +126,6 @@
           <input name="categorie_produit" type="text" placeholder="Catégorie" class="border p-3 rounded w-full" />
           <input type="file" name="image_produit" class="border p-2 rounded w-full" />
           <button type="submit" class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium flex items-center justify-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
             Ajouter le produit
           </button>
         </form>
@@ -139,7 +136,6 @@
   </div>
 </section>
 
-<!-- Script JS pour toggle -->
 <script>
 function toggleForm(id) {
   const form = document.getElementById(id);

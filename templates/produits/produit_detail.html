@@ -1,0 +1,85 @@
+{% extends "base_templates.html" %}
+{% block content %}
+{% include "navbar/navbar.html" %}
+
+<section class="bg-gray-50 py-16 px-6">
+  <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+
+    <!-- Bouton Retour -->
+    <div class="p-6">
+      <a href="{% url 'produits' %}" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Retour aux produits
+      </a>
+    </div>
+
+    <div class="flex flex-col lg:flex-row">
+      
+      <!-- Image produit -->
+      <div class="lg:w-1/2 w-full h-96 overflow-hidden">
+        {% if produit.image_produit %}
+        <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}" 
+             class="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"/>
+        {% else %}
+        <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 text-5xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v18h18V3H3zm3 9l4 4 8-8"/>
+          </svg>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Détails produit -->
+      <div class="lg:w-1/2 w-full p-8 flex flex-col justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ produit.nom_produit }}</h1>
+          <p class="text-gray-500 text-sm mb-6">{{ produit.description_produit }}</p>
+
+          <table class="w-full text-sm text-left mb-6">
+            <tbody>
+              <tr class="border-b">
+                <th class="py-2 pr-4 text-gray-500">Version</th>
+                <td class="py-2">{{ produit.version_produit }}</td>
+              </tr>
+              <tr class="border-b">
+                <th class="py-2 pr-4 text-gray-500">Compatibilité</th>
+                <td class="py-2">{{ produit.compatibilite_produit }}</td>
+              </tr>
+              <tr class="border-b">
+                <th class="py-2 pr-4 text-gray-500">Licence</th>
+                <td class="py-2">{{ produit.licence_produit }}</td>
+              </tr>
+              <tr>
+                <th class="py-2 pr-4 text-gray-500">Catégorie</th>
+                <td class="py-2">{{ produit.categorie_produit }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="text-indigo-600 text-2xl font-bold mb-6">{{ produit.prix_produit|default:"€99" }}</p>
+        </div>
+
+        <!-- Boutons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="w-full sm:w-auto bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition font-medium">
+            Ajouter au panier
+          </button>
+
+          {% if user.is_staff %}
+          <form method="POST" action="{% url 'produit_supprimer' produit.id %}" class="w-full sm:w-auto">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition font-medium">
+              Supprimer
+            </button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "footer/footer.html" %}
+{% endblock %}

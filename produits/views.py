@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from .models import Produit
 from django.contrib import messages
@@ -45,3 +45,12 @@ def produits_home(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'produits/produits_home.html', {'produits': page_obj})
+
+def produit_detail(request, pk):
+    produit = get_object_or_404(Produit, pk=pk)
+    return render(request, 'produits/produit_detail.html', {'produit': produit})
+
+def produit_supprimer(request, pk):
+    produit = get_object_or_404(Produit, pk=pk)
+    produit.delete()
+    return redirect('produits')  # ou le nom de ta vue principale produits

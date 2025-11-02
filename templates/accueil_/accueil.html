@@ -302,21 +302,55 @@
 
 <section class="service py-10 bg-gray-100">
     <div class="container mx-auto px-6 flex flex-col items-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
-            {% for formation in formations %}
-                <div class="bg-white shadow-md rounded-lg p-6 text-center w-64">
-                    {% if formation.image %}
-                        <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-24 h-24 mx-auto mb-4 object-cover rounded">
-                    {% else %}
-                        <div class="w-24 h-24 bg-gray-200 mx-auto mb-4 flex items-center justify-center rounded">
-                            <span class="text-gray-400 text-sm">Pas d'image</span>
-                        </div>
-                    {% endif %}
-                    <h5 class="text-xl font-semibold text-gray-800">{{ formation.titre }}</h5>
-                    <p class="text-gray-600 mt-2">{{ formation.description }}</p>
+       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for formation in formations %}
+        <div class="bg-white shadow-lg hover:shadow-2xl transition rounded-xl overflow-hidden group relative">
+
+            <!-- Image -->
+            {% if formation.image %}
+                <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" 
+                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+            {% else %}
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-400 text-sm">Pas d'image</span>
                 </div>
-            {% endfor %}
+            {% endif %}
+
+            <!-- Contenu -->
+            <div class="p-5 flex flex-col h-full">
+                <h5 class="text-lg font-semibold text-gray-800">{{ formation.titre }}</h5>
+                <p class="text-gray-600 text-sm mt-2 mb-4 line-clamp-3">
+                    {{ formation.description.content|truncatewords:50 }}
+                </p>
+
+                <!-- Prix (optionnel) -->
+                {% if formation.prix %}
+                    <p class="text-blue-600 font-bold text-lg mb-3">{{ formation.prix }} $</p>
+                {% endif %}
+
+                <!-- Boutons -->
+                <div class="mt-auto flex flex-col gap-2">
+                    <!-- Bouton "Voir plus = détails rapide" -->
+                    <button 
+                        class="w-full border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-2 px-4 rounded-lg text-sm transition">
+                        Voir plus
+                    </button>
+
+                    <!-- Bouton principal -->
+                    <a href="{% url 'formation_detail' formation.id %}" 
+                       class="bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 w-full rounded-lg text-sm font-medium transition">
+                        Voir la formation
+                    </a>
+                </div>
+            </div>
+
+            <!-- Badge -->
+            <span class="absolute top-3 left-3 bg-green-600 text-white px-3 py-1 text-xs rounded-full">
+                Nouveau
+            </span>
         </div>
+    {% endfor %}
+</div>
 
         <a href="{% url 'formations' %}" class="mt-6 inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
             Voir plus

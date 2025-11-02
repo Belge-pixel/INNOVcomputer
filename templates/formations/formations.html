@@ -4,44 +4,51 @@
 {% block content %}
 {% include "navbar/navbar.html" %}
 
-<!-- Formulaire pour ajouter une formation -->
+<!-- SECTION FORMULAIRE AJOUT FORMATION -->
 {% if user.is_staff %}
-<section class="py-12 bg-gray-100">
+<section class="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
     <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">Ajouter une formation</h2>
-        <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-10 text-center">
+            Ajouter une nouvelle formation
+        </h2>
+
+        <form method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-3xl shadow-lg space-y-6">
             {% csrf_token %}
-            <div class="mb-4">
-                <label for="titre" class="block text-gray-700 font-semibold mb-2">Titre :</label>
-                <input type="text" id="titre" name="titre" class="border rounded w-full p-2" placeholder="Titre de la formation" required>
+            <!-- Form fields -->
+            <div>
+                <label for="titre" class="block text-gray-700 font-semibold mb-2">Titre</label>
+                <input type="text" id="titre" name="titre" placeholder="Titre de la formation"
+                       class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
             </div>
-
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700 font-semibold mb-2">Description :</label>
-                <textarea id="description" name="description" rows="4" class="border rounded w-full p-2" placeholder="Description de la formation" required></textarea>
+            <div>
+                <label for="description" class="block text-gray-700 font-semibold mb-2">Description</label>
+                <textarea id="description" name="description" rows="4" placeholder="Description de la formation"
+                          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
             </div>
-
-            <div class="mb-4">
-                <label for="points_cles" class="block text-gray-700 font-semibold mb-2">Points clés (séparés par des virgules) :</label>
-                <textarea id="points_cles" name="points_cles" rows="3" class="border rounded w-full p-2" placeholder="Point1, Point2, Point3"></textarea>
+            <div>
+                <label for="points_cles" class="block text-gray-700 font-semibold mb-2">Points clés (séparés par des virgules)</label>
+                <textarea id="points_cles" name="points_cles" rows="3" placeholder="Point1, Point2, Point3"
+                          class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
             </div>
-
-            <div class="mb-4">
-                <label for="date_debut" class="block text-gray-700 font-semibold mb-2">Date de début :</label>
-                <input type="date" id="date_debut" name="date_debut" class="border rounded w-full p-2" required>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="date_debut" class="block text-gray-700 font-semibold mb-2">Date de début</label>
+                    <input type="date" id="date_debut" name="date_debut"
+                           class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                </div>
+                <div>
+                    <label for="date_fin" class="block text-gray-700 font-semibold mb-2">Date de fin</label>
+                    <input type="date" id="date_fin" name="date_fin"
+                           class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                </div>
             </div>
-
-            <div class="mb-4">
-                <label for="date_fin" class="block text-gray-700 font-semibold mb-2">Date de fin :</label>
-                <input type="date" id="date_fin" name="date_fin" class="border rounded w-full p-2" required>
+            <div>
+                <label for="image" class="block text-gray-700 font-semibold mb-2">Image de couverture</label>
+                <input type="file" id="image" name="image"
+                       class="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
             </div>
-
-            <div class="mb-4">
-                <label for="image" class="block text-gray-700 font-semibold mb-2">Image :</label>
-                <input type="file" id="image" name="image" class="border rounded w-full p-2">
-            </div>
-
-            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300">
+            <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl shadow-lg transition duration-300">
                 Ajouter la formation
             </button>
         </form>
@@ -49,58 +56,100 @@
 </section>
 {% endif %}
 
-<!-- Liste des formations -->
-<section class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 text-center mb-12">Nos Formations</h2>
+<!-- SECTION LISTE FORMATIONS -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-14">
+            Nos Formations
+        </h2>
 
-        {% if formations_list %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for formation in formations_list %}
-                <div class="bg-gray-50 shadow-md rounded-xl p-6 flex flex-col items-center text-center hover:shadow-xl transition">
-                    {% if formation.image %}
-                        <img src="{{ formation.image.url }}" alt="{{ formation.titre }}" class="w-32 h-32 object-cover mb-4 rounded">
-                    {% else %}
-                        <div class="w-32 h-32 bg-gray-200 flex items-center justify-center mb-4 rounded">
-                            <span class="text-gray-400">Pas d'image</span>
-                        </div>
+        {% if formation_list %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for formation in formation_list %}
+            <div class="bg-white rounded-3xl shadow-md overflow-hidden transform transition duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col relative group">
+
+                <!-- Badge dates -->
+                <div class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full font-semibold z-10">
+                    {{ formation.date_debut|date:"d M Y" }} - {{ formation.date_fin|date:"d M Y" }}
+                </div>
+
+                <!-- Image avec overlay -->
+                {% if formation.image %}
+                <div class="relative h-56 overflow-hidden">
+                    <img src="{{ formation.image.url }}" alt="{{ formation.titre }}"
+                         class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <a href="{% url 'produit_detail' formation.id %}" 
+                           class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-full transition">
+                            Voir plus
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                <div class="h-56 flex items-center justify-center bg-gray-200">
+                    <span class="text-gray-400">Pas d'image</span>
+                </div>
+                {% endif %}
+
+                <!-- Contenu -->
+                <div class="p-6 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2 truncate">{{ formation.titre }}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ formation.description }}</p>
+
+                    {% if formation.points_cles %}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for point in formation.get_points_list %}
+                        <span class="bg-indigo-100 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">
+                            {{ point }}
+                        </span>
+                        {% endfor %}
+                    </div>
                     {% endif %}
 
-                    <h3 class="text-xl font-bold mb-2">{{ formation.titre }}</h3>
-                    <p class="text-gray-600 mb-4">{{ formation.description }}</p>
-
-                    {% comment %} {% if formation.points_cles %}
-                    <ul class="text-left mb-4 list-disc list-inside text-gray-700">
-                        {% for point in formation.get_points_list %}
-                            <li>{{ point }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %} {% endcomment %}
+                    <!-- Boutons -->
+                    <div class="flex gap-3 mt-auto">
+                        <a href="{% url 'produit_detail' formation.id %}"
+                           class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-full text-center transition">
+                            Voir plus
+                        </a>
+                        {% if user.is_staff %}
+                        <form method="POST" action="{% url 'formations' formation.id %}" class="flex-1">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-full transition">
+                                Supprimer
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
         <!-- Pagination -->
-        <nav class="mt-8 flex justify-center items-center space-x-2">
-            {% if formations_list.has_previous %}
-                <a href="?page={{ formations_list.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">&laquo; Précédent</a>
+        <nav class="mt-12 flex justify-center items-center space-x-2">
+            {% if formation_list.has_previous %}
+            <a href="?page={{ formation_list.previous_page_number }}"
+               class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">&laquo; Précédent</a>
             {% endif %}
 
-            {% for num in formations_list.paginator.page_range %}
-                {% if formations_list.number == num %}
-                    <span class="px-3 py-1 bg-indigo-600 text-white rounded">{{ num }}</span>
+            {% for num in formation_list.paginator.page_range %}
+                {% if formation_list.number == num %}
+                <span class="px-3 py-1 bg-indigo-600 text-white rounded">{{ num }}</span>
                 {% else %}
-                    <a href="?page={{ num }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
+                <a href="?page={{ num }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
                 {% endif %}
             {% endfor %}
 
-            {% if formations_list.has_next %}
-                <a href="?page={{ formations_list.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Suivant &raquo;</a>
+            {% if formation_list.has_next %}
+            <a href="?page={{ formation_list.next_page_number }}"
+               class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Suivant &raquo;</a>
             {% endif %}
         </nav>
 
         {% else %}
-            <p class="text-center text-gray-500">Aucune formation disponible pour le moment.</p>
+        <p class="text-center text-gray-500 text-lg">Aucune formation disponible pour le moment.</p>
         {% endif %}
     </div>
 </section>

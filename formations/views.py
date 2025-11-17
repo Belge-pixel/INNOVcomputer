@@ -27,7 +27,7 @@ def formations(request):
                 points_cles=points_cles
             )
             messages.success(request, "Formation enregistrée avec succès !")
-            return redirect('formations_list')  # redirige après POST pour éviter double soumission
+            return redirect('formations')  # redirige après POST pour éviter double soumission
         else:
             messages.error(request, "Veuillez remplir tous les champs obligatoires.")
 
@@ -44,7 +44,7 @@ def formations(request):
         formations_page = paginator.page(paginator.num_pages)
 
     return render(request, 'formations/formations.html', {
-        'formations_list': formations_page,  # paginées
+        'formation_list': formations_page,  # paginées
         'all_formations': all_formations,    # toutes les formations
         'paginator': paginator
     })

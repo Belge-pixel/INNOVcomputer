@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'formations',
     'connexion',
     'expertise',
+    'appel',
 ]
 
 MIDDLEWARE = [

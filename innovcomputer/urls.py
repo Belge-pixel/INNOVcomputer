@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
@@ -14,9 +13,10 @@ urlpatterns = [
     path('', include('tresorerie.urls')),
     path('', include('users.urls')),
     path('', include('formations.urls')),
-    path('', include('connexion.urls')),  
+    path('', include('connexion.urls')),
     path('', include('enquetes.urls')),
-    path('', include('expertise.urls'))
+    path('', include('expertise.urls')),
+    path('', include('appel.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

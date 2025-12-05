@@ -1,0 +1,224 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block title %}Blog - InnovComputer{% endblock %}
+
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-6 text-center fade-in">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent slide-up animate-delay-200">
+            Notre Blog
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed slide-up animate-delay-400">
+            Découvrez nos analyses, tutoriels et insights sur les technologies innovantes
+        </p>
+
+        {% if user.is_staff %}
+        <a href="{% url 'blog_form' %}"
+           class="inline-flex items-center bg-white text-primary-600 px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:bg-gray-50 hover:scale-105 transition-all duration-300 hover:shadow-primary-500/25 border border-white/20 backdrop-blur-sm mt-8">
+          <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Créer un article
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ==================== ARTICLES SECTION ==================== -->
+<section class="py-20 bg-gray-50 animate-on-scroll">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+        Derniers <span class="text-blue-600">Articles</span>
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Explorez notre collection d'articles sur les technologies émergentes et l'innovation digitale
+      </p>
+    </div>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {% for new in page_obj %}
+        <article class="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transition-all duration-500 transform hover:-translate-y-3 border border-white/20 flex flex-col hover:bg-white/90">
+
+          <!-- Image article -->
+          <div class="relative w-full h-56 overflow-hidden rounded-t-2xl">
+            {% if new.new_image %}
+            <img src="{{ new.new_image.url }}" alt="{{ new.new_title }}"
+                 class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110" />
+            {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-primary-100 to-accent-100 flex items-center justify-center">
+              <div class="text-center">
+                <i class="fas fa-file-alt text-4xl text-primary-400 mb-2"></i>
+                <p class="text-primary-600 font-medium">Article</p>
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Badge catégorie -->
+            <div class="absolute top-3 left-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg">
+              {{ new.new_category|default:"Général" }}
+            </div>
+
+            <!-- Badge nouveau -->
+            {% if new.new_publication_date|timesince|slice:":7" == "0 days" %}
+            <div class="absolute top-3 right-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg animate-pulse">
+              Nouveau
+            </div>
+            {% endif %}
+
+            <!-- Overlay on hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+
+          <!-- Contenu -->
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary-600 transition-colors duration-300">
+              {{ new.new_title }}
+            </h3>
+            {% if new.new_excerpt %}
+            <p class="text-gray-600 text-sm mb-4 flex-1 leading-relaxed">
+              {{ new.new_excerpt|truncatewords:25 }}
+            </p>
+            {% else %}
+            <p class="text-gray-600 text-sm mb-4 flex-1 leading-relaxed">
+              {{ new.new_content|truncatewords:25 }}
+            </p>
+            {% endif %}
+
+            <div class="flex items-center justify-between mb-6 text-xs text-gray-500">
+              <div class="flex items-center">
+                <i class="fas fa-calendar-alt text-primary-500 mr-1"></i>
+                <span>{{ new.new_publication_date|date:"d M Y" }}</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-user text-accent-500 mr-1"></i>
+                <span>{{ new.new_author.get_full_name|default:new.new_author.username }}</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <a href="{% url 'blog_detail' new.pk %}"
+                 class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-semibold py-3 px-4 rounded-xl text-center transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                <i class="fas fa-eye mr-2"></i>Lire l'article
+              </a>
+              {% if user.is_staff %}
+              <form method="POST" action="{% url 'supprimer_new' new.id %}">
+                {% csrf_token %}
+                <button type="submit" class="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% empty %}
+        <div class="col-span-full text-center py-20">
+          <div class="max-w-lg mx-auto bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20">
+            <div class="text-center">
+              <div class="w-20 h-20 bg-gradient-to-br from-primary-100 to-accent-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-newspaper text-3xl text-primary-500"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">Aucun article pour le moment</h3>
+              <p class="text-gray-600 mb-6 leading-relaxed">Nous travaillons sur du contenu passionnant. Revenez bientôt pour découvrir nos analyses et tutoriels !</p>
+              {% if user.is_staff %}
+              <a href="{% url 'blog_form' %}" class="inline-flex items-center bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Créer le premier article
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PAGINATION MODERNE ==================== -->
+{% if page_obj.has_other_pages %}
+  <section class="py-20 bg-gradient-to-r from-white via-gray-50 to-white">
+    <div class="max-w-5xl mx-auto px-6">
+      <nav class="flex items-center justify-between bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
+        <!-- Previous Button -->
+        <div class="flex-1">
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}"
+               class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-secondary-500 to-secondary-600 hover:from-secondary-600 hover:to-secondary-700 text-white font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 group transform hover:scale-105">
+              <svg class="w-6 h-6 mr-3 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Articles précédents
+            </a>
+          {% else %}
+            <span class="inline-flex items-center px-8 py-4 bg-gray-200 text-gray-400 font-bold rounded-2xl cursor-not-allowed">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Articles précédents
+            </span>
+          {% endif %}
+        </div>
+
+        <!-- Page Numbers -->
+        <div class="flex items-center space-x-3">
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <span class="px-5 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-black rounded-xl shadow-xl transform scale-110">
+                {{ num }}
+              </span>
+            {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+              <a href="?page={{ num }}"
+                 class="px-5 py-3 bg-white text-gray-700 font-semibold rounded-xl hover:bg-primary-50 hover:text-primary-700 transition-all duration-300 hover:shadow-lg border border-gray-200 hover:border-primary-200">
+                {{ num }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Next Button -->
+        <div class="flex-1 text-right">
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"
+               class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 group transform hover:scale-105">
+              Articles suivants
+              <svg class="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          {% else %}
+            <span class="inline-flex items-center px-8 py-4 bg-gray-200 text-gray-400 font-bold rounded-2xl cursor-not-allowed">
+              Articles suivants
+              <svg class="w-6 h-6 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </span>
+          {% endif %}
+        </div>
+      </nav>
+
+      <!-- Page Info -->
+      <div class="text-center mt-10">
+        <div class="inline-flex items-center bg-white/60 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-white/20">
+          <i class="fas fa-info-circle text-primary-500 mr-3"></i>
+          <p class="text-gray-700 font-medium">
+            Page <span class="text-primary-600 font-bold">{{ page_obj.number }}</span> sur <span class="text-primary-600 font-bold">{{ page_obj.paginator.num_pages }}</span>
+            <span class="text-accent-600 font-semibold">({{ total_articles }} articles au total)</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% include "footer/footer.html" %}
+{% endblock %}

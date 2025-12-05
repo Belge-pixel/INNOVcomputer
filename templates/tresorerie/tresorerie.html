@@ -1,0 +1,221 @@
+{% extends "base_templates.html" %}
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<section class="bg-gradient-to-br from-gray-100 via-white to-gray-100 min-h-screen px-6 py-12">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10 tracking-tight text-center">
+      Trésorerie Immédiate
+    </h1>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl flex flex-col items-center gap-2">
+        <!-- Icone Solde -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v2m0 12v2m8-8h2M2 12H4"/>
+        </svg>
+        <p class="text-sm text-gray-500">Solde Actuel</p>
+        <p class="text-3xl font-bold text-green-600 mt-1">{{ amounts.global_available_amount }} fc</p>
+      </div>
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl flex flex-col items-center gap-2">
+        <!-- Icone Dépenses -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16"/>
+        </svg>
+        <p class="text-sm text-gray-500">Total Dépenses</p>
+        <p class="text-3xl font-bold text-red-500 mt-1">{{ amounts.global_used_amount }} fc</p>
+      </div>
+      <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg transition hover:shadow-xl flex flex-col items-center gap-2">
+        <!-- Icone Transactions -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18"/>
+        </svg>
+        <p class="text-sm text-gray-500">Transactions</p>
+        <p class="text-3xl font-bold text-indigo-600 mt-1">{{ transactions_number }}</p>
+      </div>
+    </div>
+
+    <!-- Bouton toggle formulaire -->
+    <button id="toggleFormBtn" 
+            class="mb-4 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
+      <!-- Icone Plus -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Ajouter une transaction
+    </button>
+
+    <!-- Formulaire ajout transaction -->
+    <form id="transactionForm" class="hidden bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4 text-justify"
+          method="POST" action='{% url "tresorerie" %}'>
+      {% csrf_token %}
+      <input type="date" name="date_transaction"
+             class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full"/>
+      <input type="text" name="categorie_transaction"
+             class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full"
+             placeholder="Catégorie"/>
+      <input type="number" name="montant_transaction"
+             class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full"
+             placeholder="Montant"/>
+      <select name="type_transaction"
+              class="border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full">
+        <option value="">Type</option>
+        <option value="entree">Entrée</option>
+        <option value="sortie">Sortie</option>
+      </select>
+      <textarea name="note_transaction"
+                class="col-span-1 sm:col-span-2 border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 p-3 rounded-lg w-full"
+                placeholder="Note..."></textarea>
+      <button type="submit"
+              class="bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 transition col-span-1 sm:col-span-2 flex items-center justify-center gap-2">
+        <!-- Icone Envoi -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        Ajouter
+      </button>
+    </form>
+
+    <!-- Filtres + nombre par page -->
+    <form method="get" class="flex flex-wrap items-center gap-4 mb-6">
+      <select name="filtre_type"
+              class="border p-3 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+        <option value="">Tous les types</option>
+        <option value="entree" {% if request.GET.filtre_type == 'entree' %}selected{% endif %}>Entrées</option>
+        <option value="sortie" {% if request.GET.filtre_type == 'sortie' %}selected{% endif %}>Sorties</option>
+      </select>
+      <input type="text" name="search" placeholder="Recherche..."
+             value="{{ request.GET.search }}"
+             class="border p-3 rounded-md focus:ring-indigo-500 focus:border-indigo-500"/>
+      <input type="number" name="per_page" placeholder="Transactions par page" 
+             value="{{ per_page }}" class="border p-3 rounded-md focus:ring-indigo-500 focus:border-indigo-500 w-36"/>
+      <button type="submit"
+              class="bg-gray-700 text-white px-5 py-2.5 rounded-md hover:bg-gray-800 transition flex items-center gap-2">
+        <!-- Icone Filtrer -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M6 12h12M10 20h4"/>
+        </svg>
+        Filtrer
+      </button>
+    </form>
+
+    <!-- Tableau -->
+    <div class="overflow-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl">
+      <table class="min-w-full text-sm text-gray-800">
+        <thead class="bg-gray-200 text-gray-600 uppercase tracking-wide">
+          <tr>
+            <th class="p-4 text-left">Date</th>
+            <th class="p-4 text-left">Type</th>
+            <th class="p-4 text-left">Montant</th>
+            <th class="p-4 text-left">Catégorie</th>
+            <th class="p-4 text-left">Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+            <tr class="border-t hover:bg-gray-50 transition">
+              <td class="p-4">{{ transaction.date_transaction|date:"d/m/Y H:i" }}</td>
+              <td class="p-4 {% if transaction.type_transaction == 'entree' %}text-green-600{% else %}text-red-600{% endif %} font-semibold">
+                {{ transaction.type_transaction|title }}
+              </td>
+              <td class="p-4">{{ transaction.montant_transaction }}</td>
+              <td class="p-4">{{ transaction.categorie_transaction }}</td>
+              <td class="p-4">{{ transaction.note_transaction }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="p-4 text-center text-gray-400">Aucune transaction trouvée</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-4 gap-2">
+      {% if transactions.has_previous %}
+        <a href="?page={{ transactions.previous_page_number }}&per_page={{ per_page }}&filtre_type={{ request.GET.filtre_type }}&search={{ request.GET.search }}"
+           class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+          <!-- Icone precedent -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Préc
+        </a>
+      {% endif %}
+      <span class="px-3 py-1 bg-gray-100 rounded">Page {{ transactions.number }} / {{ transactions.paginator.num_pages }}</span>
+      {% if transactions.has_next %}
+        <a href="?page={{ transactions.next_page_number }}&per_page={{ per_page }}&filtre_type={{ request.GET.filtre_type }}&search={{ request.GET.search }}"
+           class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+          Suiv
+          <!-- Icone suivant -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Boutons export -->
+    <div class="flex flex-wrap gap-4 mt-6">
+      <a href="#" class="bg-rose-500 text-white px-5 py-2 rounded-lg shadow hover:bg-rose-600 flex items-center gap-2">
+        <!-- PDF Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10v10H7z"/>
+        </svg>
+        PDF
+      </a>
+      <a href="#" class="bg-emerald-500 text-white px-5 py-2 rounded-lg shadow hover:bg-emerald-600 flex items-center gap-2">
+        <!-- Excel Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h16v16H4z"/>
+        </svg>
+        Excel
+      </a>
+    </div>
+
+    <!-- Graphique -->
+    <div class="mt-12 bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg">
+      <h3 class="text-lg font-semibold text-gray-700 mb-4">Évolution Mensuelle</h3>
+      <canvas id="fluxChart" class="w-full h-64"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById("fluxChart").getContext("2d");
+      const labels = {{ month_labels|safe }};
+      const entries = {{ entries_data|safe }};
+      const exits = {{ exits_data|safe }};
+      
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            { label: "Entrées", data: entries, backgroundColor: "#4F46E5" },
+            { label: "Sorties", data: exits, backgroundColor: "#EC4899" },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { position: "top" } },
+        },
+      });
+
+      // Toggle form
+      const toggleBtn = document.getElementById('toggleFormBtn');
+      const form = document.getElementById('transactionForm');
+      toggleBtn.addEventListener('click', () => {
+        form.classList.toggle('hidden');
+      });
+    </script>
+
+  </div>
+</section>
+
+{% include "footer/footer.html" %}
+{% endblock %}

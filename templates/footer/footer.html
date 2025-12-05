@@ -1,0 +1,78 @@
+<footer class="bg-gradient-to-r from-slate-900 to-slate-800 text-white py-16 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <!-- Section 1 : Présentation -->
+        <div class="text-center lg:text-left">
+            <h2 class="text-3xl font-extrabold text-blue-500 hover:text-blue-400 transition-all duration-300">
+                <i class="fas fa-building mr-2"></i>Innov<span class="text-white">C</span>omputer
+            </h2>
+            <p class="text-gray-300 mt-4 text-lg leading-relaxed">Des solutions technologiques avancées pour accompagner votre transformation digitale.</p>
+            <!-- Social Media Links -->
+            <div class="mt-6 flex justify-center lg:justify-start space-x-4">
+                <a href="#" class="text-gray-400 hover:text-blue-500 transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-facebook-f text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-blue-500 transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-blue-500 transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-linkedin-in text-xl"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-blue-500 transition-all duration-300 hover:scale-110">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Section 2 : Navigation -->
+        <div class="text-center lg:text-left">
+            <h3 class="text-xl font-semibold text-blue-500 flex items-center justify-center lg:justify-start gap-2">
+                <i class="fas fa-compass"></i>Navigation
+            </h3>
+            <ul class="mt-4 space-y-3 text-lg">
+                <li><a href="{% url 'accueil' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">Accueil</a></li>
+                <li><a href="{% url 'a_propos' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">À propos</a></li>
+                <li><a href="{% url 'produits' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">Produits</a></li>
+                <li><a href="{% url 'formations' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">Formations</a></li>
+                <li><a href="{% url 'blog' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">Blog</a></li>
+                <li><a href="{% url 'contact' %}" class="text-gray-300 hover:text-blue-500 transition-all duration-300 hover:translate-x-1">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Section 3 : Contact -->
+        <div class="text-center lg:text-left">
+            <h3 class="text-xl font-semibold text-blue-500 flex items-center justify-center lg:justify-start gap-2">
+                <i class="fas fa-map-marker-alt"></i>Contact
+            </h3>
+            <div class="mt-4 space-y-3 text-lg text-gray-300">
+                <p><i class="fas fa-map-pin mr-2 text-blue-500"></i>Kinshasa, RDC</p>
+                <p><i class="fas fa-envelope mr-2 text-blue-500"></i>contact@innovcomputer.com</p>
+                <p><i class="fas fa-phone mr-2 text-blue-500"></i>+243 970 000 000</p>
+            </div>
+        </div>
+
+        <!-- Section 4 : Formulaire de Contact -->
+        <div class="text-center lg:text-left">
+            <h3 class="text-xl font-semibold text-blue-500 flex items-center justify-center lg:justify-start gap-2">
+                <i class="fas fa-paper-plane"></i>Message
+            </h3>
+            <p class="text-gray-300 mt-2">Envoyez-nous un message directement.</p>
+            <form class="mt-4 space-y-3 w-full max-w-md mx-auto lg:mx-0">
+                <input type="text" placeholder="Votre nom" class="w-full px-4 py-3 border border-gray-600 bg-slate-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                <input type="email" placeholder="Votre email" class="w-full px-4 py-3 border border-gray-600 bg-slate-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                <textarea placeholder="Votre message" rows="3" class="w-full px-4 py-3 border border-gray-600 bg-slate-800/50 backdrop-blur-sm text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"></textarea>
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2">
+                    <i class="fas fa-send"></i>Envoyer
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-12 text-center text-gray-400 text-lg border-t border-gray-700 pt-6">
+        <p>&copy; 2025 INNOVCOMPUTER. Tous droits réservés.</p>
+        <p>
+            <a href="#mentions-legales" class="hover:text-blue-500 transition-all duration-300">Mentions légales</a> |
+            <a href="#confidentialite" class="hover:text-blue-500 transition-all duration-300">Politique de confidentialité</a>
+        </p>
+    </div>
+</footer>

@@ -1,0 +1,35 @@
+Guide de test manuel pour l'application Staff d'InnovComputer
+
+1. Préparation
+   - Assurez-vous que le serveur Django est démarré : `python manage.py runserver`
+   - Utilisez un navigateur à jour (Chrome, Firefox, Edge)
+
+2. Tests de navigation
+   - Accédez à http://127.0.0.1:8000/staff/
+     - Vérifiez que la page d'accueil staff s'affiche correctement
+     - Vérifiez l'affichage du profil staff (si existant)
+   - Accédez à http://127.0.0.1:8000/staff/dashboard/
+     - Vérifiez que les statistiques (utilisateurs, articles, formations, revenus) sont visibles et correctes
+     - Assurez-vous que la date et les messages d'accueil sont affichés
+   - Tentez d'accéder à ces URLs sans être connecté en tant que staff et vérifiez qu'un refus d'accès ou redirection se produit
+
+3. Tests UI/UX
+   - Sur chaque page, cliquez sur tous les liens et boutons pour vérifier leur fonctionnement
+   - Testez le redimensionnement de la fenêtre pour vérifier la réactivité (responsive design)
+   - Vérifiez que les fichiers CSS et images se chargent correctement sans erreurs
+
+4. Tests de permissions
+   - Connectez-vous avec un compte non staff, tentez d'accéder aux pages staff, assurez-vous que l'accès est bloqué
+   - Connectez-vous avec un compte staff, assurez-vous que vous avez accès complet
+
+5. Tests des fichiers statiques
+   - Dans Chrome DevTools ou équivalent, vérifiez les requêtes réseaux pour les fichiers CSS et images dans la section staff
+   - Vérifiez que les chemins vers les fichiers statiques correspondent à la configuration dans settings.py
+
+6. Rapports de bugs ou anomalies
+   - Notez toute erreur visuelle, navigation ou permission incorrecte
+   - Notez tout problème de chargement de fichier statique
+
+Vous pouvez me transmettre vos retours ou rapports pour corrections ou améliorations.
+
+Bonne session de test !

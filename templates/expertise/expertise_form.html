@@ -1,0 +1,41 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block content %}
+{% include "navbar/navbar.html" %}
+
+<section class="max-w-4xl mx-auto my-16 p-8 bg-white rounded-2xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6">
+        {% if form.instance.pk %}Modifier Expertise{% else %}Ajouter Expertise{% endif %}
+    </h1>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <!-- Tous les champs générés par le ModelForm -->
+        {% for field in form %}
+            <div>
+                <label class="block text-gray-700 font-medium mb-2" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ field.errors|striptags }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="text-center">
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-500 transition">
+                {% if form.instance.pk %}Mettre à jour{% else %}Ajouter{% endif %}
+            </button>
+            <a href="{% url 'expertise' %}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-500 transition">
+                Retourner sur la page des expertises
+            </a>
+        </div>
+    </form>
+</section>
+
+{% include "footer/footer.html" %}
+{% endblock %}

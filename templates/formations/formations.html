@@ -1,0 +1,269 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<!-- Bannière Hero -->
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-6 text-center fade-in">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent slide-up animate-delay-200">
+            Nos Formations
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed slide-up animate-delay-400">
+            Développez vos compétences avec nos programmes d'excellence en technologie et innovation
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <div class="bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3">
+                <span class="text-blue-400 font-semibold">Formation Continue</span>
+            </div>
+            <div class="bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3">
+                <span class="text-blue-400 font-semibold">Certification Reconnue</span>
+            </div>
+            <div class="bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3">
+                <span class="text-blue-400 font-semibold">Experts Qualifiés</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION FORMULAIRE AJOUT FORMATION -->
+{% if user.is_staff %}
+<section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 animate-on-scroll">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-blue-100">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Ajouter une Formation</h2>
+                <p class="text-gray-600 text-lg">Créez un nouveau programme de formation pour enrichir notre catalogue</p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" class="space-y-8">
+                {% csrf_token %}
+
+                <!-- Informations principales -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label for="titre" class="block text-gray-700 font-bold mb-3 text-lg">Titre de la Formation</label>
+                            <input type="text" id="titre" name="titre" placeholder="Ex: Développement Web Full-Stack"
+                                   class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-400">
+                        </div>
+
+                        <div>
+                            <label for="description" class="block text-gray-700 font-bold mb-3 text-lg">Description Détaillée</label>
+                            <textarea id="description" name="description" rows="6" placeholder="Décrivez les objectifs, le contenu et les bénéfices de cette formation..."
+                                      class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-400 resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label for="points_cles" class="block text-gray-700 font-bold mb-3 text-lg">Points Clés (séparés par des virgules)</label>
+                            <textarea id="points_cles" name="points_cles" rows="4" placeholder="HTML/CSS, JavaScript, React, Node.js, MongoDB"
+                                      class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-400 resize-none"></textarea>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="date_debut" class="block text-gray-700 font-bold mb-3">Date de Début</label>
+                                <input type="date" id="date_debut" name="date_debut"
+                                       class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300">
+                            </div>
+                            <div>
+                                <label for="date_fin" class="block text-gray-700 font-bold mb-3">Date de Fin</label>
+                                <input type="date" id="date_fin" name="date_fin"
+                                       class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300">
+                            </div>
+                        </div>
+
+                        <!-- Image -->
+                        <div>
+                            <label for="image" class="block text-gray-700 font-bold mb-3 text-lg">Image de Présentation</label>
+                            <div class="relative">
+                                <input type="file" id="image" name="image" accept="image/*"
+                                       class="w-full border-2 border-gray-200 rounded-2xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton de soumission -->
+                <div class="text-center pt-6">
+                    <button type="submit"
+                            class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-12 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-lg">
+                        <i class="fas fa-plus-circle mr-3"></i>Créer la Formation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- SECTION LISTE FORMATIONS -->
+<section class="py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50 animate-on-scroll">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 sm:mb-6">
+                Catalogue des <span class="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Formations</span>
+            </h2>
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+            Découvrez notre sélection de formations de qualité, conçues pour vous accompagner dans votre développement professionnel
+        </p>
+        </div>
+
+        {% if formation_list %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for formation in formation_list %}
+            <div class="group bg-white rounded-lg shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 flex flex-col">
+
+                <!-- Image formation -->
+                <div class="relative w-full h-48 overflow-hidden">
+                  {% if formation.image %}
+                  <img src="{{ formation.image.url }}" alt="{{ formation.titre }}"
+                       class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  {% else %}
+                  <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                    </svg>
+                  </div>
+                  {% endif %}
+
+                  <!-- Badge dates -->
+                  <div class="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                    {{ formation.date_debut|date:"d M" }} - {{ formation.date_fin|date:"d M Y" }}
+                  </div>
+
+                  <!-- Badge nouveau -->
+                  {% if formation.date_debut|timesince|slice:":7" == "0 days" %}
+                  <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                    Nouveau
+                  </div>
+                  {% endif %}
+                </div>
+
+                <!-- Contenu -->
+                <div class="p-4 flex flex-col flex-1">
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                    {{ formation.titre }}
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4 flex-1">
+                    {{ formation.description|truncatewords:20 }}
+                  </p>
+                  {% if formation.points_cles %}
+                  <div class="mb-4">
+                    <div class="flex flex-wrap gap-1">
+                      {% for point in formation.get_points_list %}
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                        {{ point }}
+                      </span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="flex gap-2">
+                    <a href="{% url 'formation_detail' formation.id %}"
+                       class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-center transition-colors">
+                      Découvrir
+                    </a>
+                    {% if user.is_staff %}
+                    <form method="POST" action="{% url 'formations' formation.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+                    {% endif %}
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination professionnelle -->
+        <nav class="mt-16 flex justify-center">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-2">
+                <div class="flex items-center space-x-2">
+                    {% if formation_list.has_previous %}
+                    <a href="?page={{ formation_list.previous_page_number }}"
+                       class="flex items-center px-4 py-2 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-700 rounded-xl transition-all duration-300 font-semibold">
+                        <i class="fas fa-chevron-left mr-2"></i>Précédent
+                    </a>
+                    {% endif %}
+
+                    {% for num in formation_list.paginator.page_range %}
+                        {% if formation_list.number == num %}
+                        <span class="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-bold shadow-lg">{{ num }}</span>
+                        {% else %}
+                        <a href="?page={{ num }}" class="flex items-center px-4 py-2 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-700 rounded-xl transition-all duration-300 font-semibold">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if formation_list.has_next %}
+                    <a href="?page={{ formation_list.next_page_number }}"
+                       class="flex items-center px-4 py-2 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-700 rounded-xl transition-all duration-300 font-semibold">
+                        Suivant<i class="fas fa-chevron-right ml-2"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% else %}
+        <div class="text-center py-16">
+            <div class="max-w-md mx-auto">
+                <i class="fas fa-graduation-cap text-8xl text-gray-300 mb-6"></i>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Aucune Formation Disponible</h3>
+                <p class="text-gray-600 text-lg">Nous travaillons actuellement à l'ajout de nouvelles formations passionnantes. Revenez bientôt !</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Section Call-to-Action -->
+<section class="py-20 bg-gradient-to-r from-gray-900 to-blue-900 text-white animate-on-scroll">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6">
+            Prêt à Développer vos Compétences ?
+        </h2>
+        <p class="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto px-4">
+            Rejoignez notre communauté d'apprenants et boostez votre carrière avec nos formations d'excellence.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contact' %}"
+               class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 text-lg">
+                <i class="fas fa-envelope mr-2"></i>Nous Contacter
+            </a>
+            <a href="{% url 'appel_page' %}"
+               class="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 text-lg">
+                <i class="fas fa-phone mr-2"></i>Nous Appeler
+            </a>
+        </div>
+    </div>
+</section>
+
+{% include "footer/footer.html" %}
+
+<!-- Styles personnalisés -->
+<style>
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.group:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+</style>
+{% endblock %}

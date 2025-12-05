@@ -1,0 +1,45 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block title %}Profil Staff - InnovComputer{% endblock %}
+
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-12">
+    <h1 class="text-3xl font-bold mb-6">Mon Profil</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Profile Info -->
+        <div class="col-span-1 flex flex-col items-center">
+            {% if staff_profile.profile_picture %}
+                <img class="w-32 h-32 rounded-full object-cover mb-4" src="{{ staff_profile.profile_picture.url }}" alt="Photo de profil">
+            {% else %}
+                <div class="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center mb-4">
+                    <i class="fas fa-user text-5xl text-white"></i>
+                </div>
+            {% endif %}
+            <h2 class="text-xl font-semibold">{{ user.get_full_name }}</h2>
+            <p class="text-gray-600">{{ user.email }}</p>
+        </div>
+        <!-- Profile Form -->
+        <div class="col-span-1 md:col-span-2">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'staff:profile' %}" class="space-y-6">
+                {% csrf_token %}
+                <div>
+                    <label for="phone_number" class="block text-sm font-medium text-gray-700">Téléphone</label>
+                    <input type="tel" name="phone_number" id="phone_number" value="{{ staff_profile.phone_number|default_if_none:'' }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"/>
+                </div>
+                <div>
+                    <label for="profile_picture" class="block text-sm font-medium text-gray-700">Photo de profil</label>
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"/>
+                </div>
+                <button type="submit" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">Mettre à jour</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "footer/footer.html" %}
+{% endblock %}

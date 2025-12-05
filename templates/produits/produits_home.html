@@ -1,0 +1,175 @@
+{% extends "base_templates.html" %}
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<!-- Bannière Hero Produits & Services -->
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white py-24 overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-6 text-center fade-in">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent slide-up animate-delay-200">
+            Découvrez nos produits et services révolutionnaires pour booster votre entreprise
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed slide-up animate-delay-400">
+            Découvrez notre gamme complète de solutions technologiques innovantes et de services d'accompagnement
+        </p>
+    </div>
+</section>
+
+<section class="bg-gray-50 py-16 px-6 animate-on-scroll">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-900 mb-12 text-center tracking-tight">Nos Produits & Services</h1>
+
+    <!-- Filtres -->
+    <form method="get" class="flex flex-wrap gap-4 items-center justify-center mb-12">
+      <select name="categorie" class="border border-gray-300 p-3 rounded-md focus:ring-indigo-500">
+        <option value="">Toutes les catégories</option>
+        <option value="logiciel">Logiciels</option>
+        <option value="matériel">Matériels</option>
+      </select>
+      <input type="text" name="search" placeholder="Recherche..." class="border border-gray-300 p-3 rounded-md" />
+      <button class="bg-indigo-600 text-white px-5 py-2 rounded-md hover:bg-indigo-700 transition flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1012 19.5a7.5 7.5 0 004.65-2.85z"/>
+        </svg>
+        Filtrer
+      </button>
+    </form>
+
+    <!-- Grille produits -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for produit in produits %}
+      <div class="group bg-white rounded-lg shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 flex flex-col">
+
+        <!-- Image produit -->
+        <div class="relative w-full h-48 overflow-hidden">
+          {% if produit.image_produit %}
+          <img src="{{ produit.image_produit.url }}" alt="{{ produit.nom_produit }}"
+               class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          {% else %}
+          <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          {% endif %}
+
+          <!-- Badge catégorie -->
+          <div class="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+            {{ produit.categorie_produit }}
+          </div>
+
+          <!-- Badge nouveau -->
+          {% if produit.id|add:"0" == produits|length %}
+          <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+            Nouveau
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Contenu -->
+        <div class="p-4 flex flex-col flex-1">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+            {{ produit.nom_produit }}
+          </h3>
+          <p class="text-gray-600 text-sm mb-4 flex-1">
+            {{ produit.description_produit|truncatewords:20 }}
+          </p>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xl font-bold text-blue-600">
+              {{ produit.prix_produit|default:"€99" }}
+            </span>
+            <span class="text-sm text-gray-500">
+              v{{ produit.version_produit }}
+            </span>
+          </div>
+          <div class="flex gap-2">
+            <a href="{% url 'produit_detail' produit.id %}"
+               class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-center transition-colors">
+              Voir Détails
+            </a>
+            {% if user.is_staff %}
+            <form method="POST" action="{% url 'produit_supprimer' produit.id %}">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">
+                <i class="fas fa-trash"></i>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-12 gap-2 flex-wrap">
+      {% if produits.has_previous %}
+      <a href="?page={{ produits.previous_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+         class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+         </svg>
+         Précédent
+      </a>
+      {% endif %}
+
+      {% for num in produits.paginator.page_range %}
+        {% if produits.number == num %}
+          <span class="px-4 py-2 bg-indigo-600 text-white rounded">{{ num }}</span>
+        {% elif num > produits.number|add:'-3' and num < produits.number|add:'3' %}
+          <a href="?page={{ num }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+             class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if produits.has_next %}
+      <a href="?page={{ produits.next_page_number }}{% if request.GET.categorie %}&categorie={{ request.GET.categorie }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+         class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 flex items-center gap-1">
+         Suivant
+         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+         </svg>
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- Formulaire Admin -->
+    {% if user.is_staff %}
+    <section id="adminForm" class="hidden bg-gray-50 py-16 px-6 mt-6">
+      <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg border-t-4 border-indigo-500">
+        <form method="POST" enctype="multipart/form-data" class="grid gap-6" action="{% url 'produits' %}">
+          {% csrf_token %}
+          <input name="nom_produit" type="text" placeholder="Nom du produit" class="border p-3 rounded w-full" required />
+          <textarea name="description_produit" rows="4" placeholder="Description du produit" class="border p-3 rounded w-full" required></textarea>
+          <div class="grid md:grid-cols-2 gap-4">
+            <input name="version_produit" type="text" placeholder="Version" class="border p-3 rounded w-full" />
+            <input name="compatibilite_produit" type="text" placeholder="Compatibilité" class="border p-3 rounded w-full" />
+          </div>
+          <input name="licence_produit" type="text" placeholder="Licence" class="border p-3 rounded w-full" />
+          <input name="categorie_produit" type="text" placeholder="Catégorie" class="border p-3 rounded w-full" />
+          <input type="file" name="image_produit" class="border p-2 rounded w-full" />
+          <button type="submit" class="bg-indigo-600 text-white py-3 px-6 rounded hover:bg-indigo-700 transition w-full font-medium flex items-center justify-center gap-2">
+            Ajouter le produit
+          </button>
+        </form>
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</section>
+
+<script>
+function toggleForm(id) {
+  const form = document.getElementById(id);
+  form.classList.toggle('hidden');
+  if (!form.classList.contains('hidden')) {
+    form.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script>
+
+{% include "footer/footer.html" %}
+{% endblock %}

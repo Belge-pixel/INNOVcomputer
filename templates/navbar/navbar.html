@@ -1,0 +1,58 @@
+<nav class="bg-gray-900 border-b border-secondary-200/50 py-4 ">
+    <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="flex items-center">
+            <!-- Logo -->
+            <!-- <div class="flex-shrink-0">
+                <a href="{% url 'accueil' %}" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-all duration-300 flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg">
+                        <i class="fas fa-laptop-code text-white text-sm"></i>
+                    </div>
+                    <span class="font-extrabold tracking-tight">Innov<span class="text-primary-600">C</span>omputer</span>
+                </a>
+            </div> -->
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="{% url 'accueil' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'accueil' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-home mr-2"></i>Accueil
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'accueil' %}w-full{% endif %}"></span>
+                </a>
+                <a href="{% url 'a_propos' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'a_propos' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-info-circle mr-2"></i>À propos
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'a_propos' %}w-full{% endif %}"></span>
+                </a>
+                <a href="{% url 'produits' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'produits' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-box mr-2"></i>Produits
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'produits' %}w-full{% endif %}"></span>
+                </a>
+                <a href="{% url 'formations' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'formations' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-graduation-cap mr-2"></i>Formations
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'formations' %}w-full{% endif %}"></span>
+                </a>
+                <a href="{% url 'blog' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'blog' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-blog mr-2"></i>Blog
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'blog' %}w-full{% endif %}"></span>
+                </a>
+                <a href="{% url 'contact' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'contact' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-envelope mr-2"></i>Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'contact' %}w-full{% endif %}"></span>
+                </a>
+                {% if user.is_staff %}
+                <a href="{% url 'tresorerie' %}" class="nav-link text-white hover:text-primary-600 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-primary-50 hover:scale-105 hover:shadow-lg hover:shadow-primary-500/25 relative group {% if request.resolver_match.url_name == 'tresorerie' %}bg-primary-100 text-primary-700 shadow-md shadow-primary-500/25{% endif %}">
+                    <i class="fas fa-wallet mr-2"></i>Trésorerie
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300 {% if request.resolver_match.url_name == 'tresorerie' %}w-full{% endif %}"></span>
+                </a>
+                {% endif %}
+            </div>
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            
+        </div>      
+        </div>
+    </div>
+</nav>

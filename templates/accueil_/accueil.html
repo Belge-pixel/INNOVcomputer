@@ -1,0 +1,563 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block content %}
+{% include "header/header.html" %}
+{% include "navbar/navbar.html" %}
+
+<!-- Bannière Hero Principale -->
+<section class="relative min-h-screen flex flex-col justify-center items-center text-center bg-cover bg-center text-white w-full px-4 py-12 overflow-hidden"
+         style="background-image: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%), url('{% static "image/bg1.jpeg" %}');">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute bottom-10 right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+    </div>
+
+    <!-- Glass morphism overlay -->
+    <div class="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto fade-in animate-on-scroll">
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 mb-6">
+            <i class="fas fa-rocket text-primary-400 mr-2"></i>
+            <span class="text-white/90 font-medium">InnovComputer Solutions</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-3xl xl:text-7xl font-black mb-4 sm:mb-6 tracking-tight leading-tight text-white slide-up animate-delay-200">
+            Découvrez nos produits et services révolutionnaires pour booster votre entreprise
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mt-4 sm:mt-6 opacity-90 max-w-4xl mx-auto leading-relaxed font-light slide-up animate-delay-400 px-4">
+            Solutions Technologiques Innovantes
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-8 sm:mt-12">
+            <a href="{% url 'produits' %}"
+               class="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 text-base sm:text-lg flex items-center gap-2 sm:gap-3">
+                <i class="fas fa-rocket"></i>
+                Explorer nos Produits
+            </a>
+            <a href="{% url 'formations' %}"
+               class="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 text-base sm:text-lg flex items-center gap-2 sm:gap-3">
+                <i class="fas fa-graduation-cap"></i>
+                Nos Formations
+            </a>
+        </div>
+
+        <!-- Indicateurs de confiance -->
+        <div class="flex flex-wrap justify-center gap-8 mt-16 text-center">
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div class="text-3xl font-bold text-primary-400 mb-2">500+</div>
+                <div class="text-gray-300 font-medium">Projets Réalisés</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div class="text-3xl font-bold text-primary-400 mb-2">50+</div>
+                <div class="text-gray-300 font-medium">Clients Satisfaits</div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div class="text-3xl font-bold text-primary-400 mb-2">10+</div>
+                <div class="text-gray-300 font-medium">Années d'Expérience</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+</section>
+
+<!-- Section Mission Modernisée -->
+<section class="py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50 animate-on-scroll">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 slide-up animate-delay-200">
+                Notre Mission : <span class="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Enseigner, Innover et Inspirer</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed slide-up animate-delay-400">
+                Chez INNOVcomputer, nous sommes passionnés par la transmission du savoir et l'innovation technologique.
+                Nous accompagnons nos apprenants et partenaires dans leur montée en compétences.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <!-- Enseigner -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="relative w-20 h-20 flex items-center justify-center">
+                        <div class="absolute w-10 h-10 bg-blue-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                        <div class="absolute w-10 h-10 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                        <div class="absolute w-10 h-10 bg-green-400 rounded-full" style="right:0; top:60%;"></div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Enseigner</h3>
+                <p class="text-gray-800 text-center mb-6 leading-relaxed">
+                    Des formations pratiques et accessibles pour tous, du débutant à l'expert, en programmation, web, IA et plus.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-code text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Programmation Python/Django :</strong> Applications web robustes</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-globe text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Développement Web :</strong> HTML5, CSS3, JavaScript</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-brain text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Intelligence Artificielle :</strong> Machine learning, Data science</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-mobile-alt text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Développement Mobile :</strong> Android/iOS performantes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Innover -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100 scale-in animate-delay-200">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="relative w-20 h-20 flex items-center justify-center">
+                        <div class="absolute w-10 h-10 bg-blue-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                        <div class="absolute w-10 h-10 bg-yellow-400 rounded-full" style="left:0; top:60%;"></div>
+                        <div class="absolute w-10 h-10 bg-pink-400 rounded-full" style="right:0; top:60%;"></div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Innover</h3>
+                <p class="text-gray-600 text-center mb-6 leading-relaxed">
+                    Nous développons des solutions technologiques sur-mesure et restons à la pointe de l'innovation digitale.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-building text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Projets d'entreprise :</strong> Digitalisation et automatisation</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-landmark text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Projets gouvernementaux :</strong> Solutions publiques</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-search text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Veille technologique :</strong> Tendances du numérique</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-lightbulb text-blue-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-blue-600">Défis d'innovation :</strong> Créativité et équipe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Créer & Inspirer -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-100 scale-in animate-delay-300">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="relative w-20 h-20 flex items-center justify-center">
+                        <div class="absolute w-10 h-10 bg-green-400 rounded-full" style="top:0; left:50%; transform:translate(-50%,0);"></div>
+                        <div class="absolute w-10 h-10 bg-blue-400 rounded-full" style="left:0; top:60%;"></div>
+                        <div class="absolute w-10 h-10 bg-blue-400 rounded-full" style="right:0; top:60%;"></div>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Créer & Inspirer</h3>
+                <p class="text-gray-600 text-center mb-6 leading-relaxed">
+                    Organisation de concours, hackathons et événements pour stimuler la créativité et révéler les talents.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-trophy text-green-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-green-600">Concours de programmation :</strong> Compétences à l'épreuve</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-clock text-green-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-green-600">Hackathons :</strong> Projets innovants en équipe</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-user-friends text-green-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-green-600">Coaching & mentorat :</strong> Accompagnement personnalisé</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-users text-green-500 mt-1 flex-shrink-0"></i>
+                        <span class="text-gray-700 text-sm"><strong class="text-green-600">Communauté :</strong> Réseau dynamique</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Services Carousel Modernisée -->
+<section class="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white animate-on-scroll">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+                Nos <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Expertises</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Découvrez notre palette complète de services technologiques pour répondre à tous vos besoins
+            </p>
+        </div>
+
+        <div id="carousel-services" class="relative w-full">
+            <div class="overflow-hidden rounded-3xl shadow-2xl">
+                <div class="flex transition-transform duration-700" id="carousel-inner">
+                    <!-- Développement logiciel -->
+                    <div class="min-w-full bg-white text-gray-900 p-8 md:p-12">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-code text-3xl text-white"></i>
+                            </div>
+                            <h4 class="text-3xl font-bold mb-4">Développement logiciel</h4>
+                        </div>
+                        <p class="text-gray-600 text-center mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                            Conception, développement et déploiement d'applications web, mobiles ou desktop sur-mesure.
+                            Nous vous accompagnons de l'idée à la mise en production.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Analyse des besoins et cahier des charges</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Développement agile et itératif</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Maintenance évolutive et corrective</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Formation à l'utilisation</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-arrow-right mr-2"></i>S'inscrire
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Intelligence artificielle -->
+                    <div class="min-w-full bg-white text-gray-900 p-8 md:p-12">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-brain text-3xl text-white"></i>
+                            </div>
+                            <h4 class="text-3xl font-bold mb-4">Intelligence artificielle</h4>
+                        </div>
+                        <p class="text-gray-600 text-center mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                            Développez des solutions intelligentes grâce à l'IA : automatisation, analyse prédictive,
+                            traitement du langage naturel, vision par ordinateur.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Modèles de machine learning sur-mesure</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Analyse de données et data science</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Automatisation de tâches complexes</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Intégration IA dans vos outils</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-arrow-right mr-2"></i>S'inscrire
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Réseaux et télécommunications -->
+                    <div class="min-w-full bg-white text-gray-900 p-8 md:p-12">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-network-wired text-3xl text-white"></i>
+                            </div>
+                            <h4 class="text-3xl font-bold mb-4">Réseaux et télécommunications</h4>
+                        </div>
+                        <p class="text-gray-600 text-center mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                            Conception, déploiement et gestion d'infrastructures réseau performantes et sécurisées.
+                            Nous vous aidons à rester connectés et à optimiser vos communications.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Installation et configuration réseau</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Optimisation des performances</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Sécurisation des accès et données</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Support et maintenance 24/7</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-arrow-right mr-2"></i>S'inscrire
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Développement mobile -->
+                    <div class="min-w-full bg-white text-gray-900 p-8 md:p-12">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-mobile-alt text-3xl text-white"></i>
+                            </div>
+                            <h4 class="text-3xl font-bold mb-4">Développement mobile</h4>
+                        </div>
+                        <p class="text-gray-600 text-center mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
+                            Conception et développement d'applications mobiles iOS et Android performantes,
+                            ergonomiques et sécurisées.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Applications natives et hybrides</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">UX/UI design sur-mesure</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Tests, déploiement et maintenance</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <span class="text-gray-700">Fonctionnalités avancées intégrées</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-arrow-right mr-2"></i>S'inscrire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation dots -->
+            <div class="flex justify-center mt-8 gap-3">
+                <button class="w-4 h-4 rounded-full bg-blue-500 transition-all duration-300" onclick="carouselGoTo(0)"></button>
+                <button class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" onclick="carouselGoTo(1)"></button>
+                <button class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" onclick="carouselGoTo(2)"></button>
+                <button class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/50 transition-all duration-300" onclick="carouselGoTo(3)"></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Formations Preview Modernisée -->
+<section class="py-24 bg-gradient-to-br from-gray-50 to-white animate-on-scroll">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+                Nos <span class="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Formations</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Découvrez notre sélection de formations de qualité, conçues pour vous accompagner dans votre développement professionnel
+            </p>
+        </div>
+
+        {% if formations %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {% for formation in formations %}
+            <div class="bg-white rounded-3xl shadow-lg hover:shadow-2xl overflow-hidden transform transition-all duration-500 hover:-translate-y-3 border border-gray-100 group">
+
+                <!-- Badge Nouveau -->
+                <div class="absolute top-4 left-4 z-20">
+                    <span class="bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">
+                        Nouveau
+                    </span>
+                </div>
+
+                <!-- Image -->
+                {% if formation.image %}
+                <div class="relative h-48 overflow-hidden">
+                    <img src="{{ formation.image.url }}" alt="{{ formation.titre }}"
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                {% else %}
+                <div class="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div class="text-center">
+                        <i class="fas fa-graduation-cap text-4xl text-gray-400 mb-2"></i>
+                        <span class="text-gray-500 font-semibold">Image à venir</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Contenu -->
+                <div class="p-6">
+                    <h5 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                        {{ formation.titre }}
+                    </h5>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                        {{ formation.description|truncatewords:20 }}
+                    </p>
+
+                    <!-- Boutons -->
+                    <div class="flex gap-3">
+                        <a href="{% url 'formation_detail' formation.id %}"
+                           class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-2xl text-center transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-eye mr-2"></i>Découvrir
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Bouton Voir Plus -->
+        <div class="text-center">
+            <a href="{% url 'formations' %}"
+               class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg">
+                <i class="fas fa-graduation-cap mr-3"></i>Voir toutes nos formations
+            </a>
+        </div>
+
+        {% else %}
+        <div class="text-center py-16">
+            <div class="max-w-md mx-auto">
+                <i class="fas fa-graduation-cap text-6xl text-gray-300 mb-6"></i>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Aucune Formation Disponible</h3>
+                <p class="text-gray-600 text-lg">Nous travaillons actuellement à l'ajout de nouvelles formations passionnantes. Revenez bientôt !</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Section Call-to-Action Finale -->
+<section class="py-20 bg-gradient-to-r from-gray-900 to-blue-900 text-white animate-on-scroll">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+            Prêt à Commencer Votre Transformation ?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Rejoignez INNOVcomputer et donnez un nouvel élan à votre carrière dans la technologie
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'formations' %}"
+               class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 text-lg flex items-center gap-3">
+                <i class="fas fa-graduation-cap"></i>
+                Nos Formations
+            </a>
+            <a href="{% url 'contact' %}"
+               class="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 text-lg flex items-center gap-3">
+                <i class="fas fa-envelope"></i>
+                Nous Contacter
+            </a>
+        </div>
+    </div>
+</section>
+
+{% include "footer/footer.html" %}
+
+<!-- Script Carousel -->
+<script>
+let currentSlide = 0;
+const totalSlides = 4;
+
+function carouselGoTo(idx) {
+    const inner = document.getElementById('carousel-inner');
+    currentSlide = idx;
+    inner.style.transform = `translateX(-${idx * 100}%)`;
+
+    // Update dots
+    document.querySelectorAll('#carousel-services button').forEach((btn, i) => {
+        if (i === idx) {
+            btn.classList.remove('bg-white/30', 'hover:bg-white/50');
+            btn.classList.add('bg-blue-500');
+        } else {
+            btn.classList.remove('bg-blue-500');
+            btn.classList.add('bg-white/30', 'hover:bg-white/50');
+        }
+    });
+}
+
+// Auto-play carousel
+setInterval(() => {
+    const nextSlide = (currentSlide + 1) % totalSlides;
+    carouselGoTo(nextSlide);
+}, 5000);
+
+// Initialize
+carouselGoTo(0);
+</script>
+
+<!-- Styles personnalisés -->
+<style>
+.line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Animations personnalisées */
+.fade-in {
+    animation: fadeIn 1s ease-out forwards;
+    opacity: 0;
+}
+
+.slide-up {
+    animation: slideUp 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.animate-delay-100 {
+    animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+    animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+</style>
+
+{% endblock %}

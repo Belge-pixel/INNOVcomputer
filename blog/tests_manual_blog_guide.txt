@@ -1,0 +1,39 @@
+Guide de tests manuels pour l’application Blog
+
+1. Vérification du rendu des pages principales
+- Page de listing des articles (/blog/)
+  * Vérifiez que la liste des articles s’affiche, avec pagination fonctionnelle
+  * Les articles affichés doivent avoir le statut "published"
+- Détail d’un article (/blog/<pk>/)
+  * Vérifiez l'affichage complet des informations de l'article
+  * Vérifiez la liste des commentaires et le formulaire d’ajout de commentaire
+
+2. Test de création d'articles
+- Accédez à la page de création (/blog/new/)
+- Remplissez et soumettez un formulaire valide
+- Confirmez que l'article est bien ajouté et visible dans la liste publiée
+
+3. Test de suppression d’un article
+- Accédez à un article existant dont vous êtes l’auteur
+- Cliquez sur le lien ou bouton de suppression (doit pointer vers /blog/<pk>/delete/)
+- Vérifiez que la page de confirmation de suppression s’affiche
+- Confirmez la suppression, et validez que l’article disparaît de la liste
+- Testez que les utilisateurs non auteurs ou non staff ne peuvent pas supprimer
+
+4. Test des permissions
+- Essayez de créer, modifier ou supprimer un article sans être connecté (doit rediriger vers login)
+- Essayez de supprimer un article d’un autre utilisateur (doit renvoyer une erreur 403)
+
+5. Test des erreurs
+- Soumettez des formulaires vides ou invalides et vérifiez que les messages d’erreur s’affichent
+- Testez la pagination avec des indices de pages invalides ou hors limites
+
+6. Tests réactifs et UX
+- Testez l’interface avec différentes tailles d’écran (responsive)
+- Vérifiez la fluidité de la navigation et la cohérence des messages
+
+7. Test des assets, CSS et JS
+- Vérifiez que les fichiers statiques nécessaires sont bien chargés sans erreurs
+- Testez le bon fonctionnement des scripts liés aux interactions dans les pages blog
+
+N’hésitez pas à me signaler toute anomalie rencontrée durant ces tests afin que je puisse vous aider à y remédier.

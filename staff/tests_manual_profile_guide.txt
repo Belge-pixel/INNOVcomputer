@@ -1,0 +1,34 @@
+Guide de tests manuels pour la page Profil Staff
+
+1. Préparation
+- Assurez-vous que le serveur Django est en marche : python manage.py runserver
+- Accédez à la page Profil (par exemple http://127.0.0.1:8000/staff/profile/ ) en tant qu'utilisateur staff connecté.
+
+2. Vérification du rendu
+- Vérifiez que le header et la navbar sont bien affichés.
+- Vérifiez que la photo de profil s'affiche si disponible, sinon l'icône par défaut.
+- Vérifiez l'affichage du nom complet et de l'adresse mail.
+
+3. Test du formulaire de mise à jour
+- Remplissez/modifiez le champ téléphone et vérifiez que la valeur est acceptée.
+- Ajoutez/modifiez une photo de profil (formats image communs : jpg, png).
+- Soumettez le formulaire.
+- Vérifiez que les modifications sont bien enregistrées et affichées à nouveau.
+
+4. Gestion des erreurs
+- Testez la soumission avec un téléphone invalide ou sans photo, vérifiez que la validation frontend/backend fonctionne.
+- Essayez de soumettre le formulaire sans être connecté, vérifiez la redirection ou l'accès bloqué.
+
+5. Réactivité et ergonomie
+- Testez sur différentes tailles d'écran pour la mise en page responsive.
+- Testez l'interaction clavier pour les champs et le bouton de validation.
+
+6. Intégration des fichiers statiques
+- Vérifiez que les fichiers CSS, JS et images (header, navbar, icônes) sont chargés sans erreurs.
+- Utilisez l'outil développeur du navigateur (console, réseau) pour confirmer l'absence d'erreurs.
+
+7. Navigation depuis/durant le Profil
+- Testez les liens vers les autres pages staff (dashboard, home) depuis la page profil.
+- Assurez-vous que la navigation est fluide et sans erreurs.
+
+N'hésitez pas à me faire un retour sur toute anomalie, bug ou suggestion pour améliorer l'ergonomie ou l'affichage.

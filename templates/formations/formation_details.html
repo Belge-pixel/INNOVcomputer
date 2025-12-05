@@ -1,0 +1,295 @@
+{% extends "base_templates.html" %}
+{% load static %}
+
+{% block content %}
+{% include "navbar/navbar.html" %}
+
+<!-- Bannière Hero -->
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white py-20 overflow-hidden">
+    <div class="absolute inset-0 bg-black/30"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    <div class="relative max-w-6xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+            <!-- Image -->
+            <div class="flex-shrink-0">
+                {% if formation.image %}
+                <div class="relative">
+                    <img src="{{ formation.image.url }}" alt="{{ formation.titre }}"
+                         class="w-64 h-64 lg:w-80 lg:h-80 object-cover rounded-3xl shadow-2xl border-4 border-blue-400">
+                    <div class="absolute -bottom-4 -right-4 bg-blue-500 text-white p-4 rounded-2xl shadow-xl">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                    </div>
+                </div>
+                {% else %}
+                <div class="w-64 h-64 lg:w-80 lg:h-80 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center rounded-3xl shadow-2xl border-4 border-gray-400">
+                    <div class="text-center">
+                        <i class="fas fa-graduation-cap text-6xl text-gray-500 mb-4"></i>
+                        <span class="text-gray-600 font-semibold">Image à venir</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Contenu -->
+            <div class="flex-1 text-center lg:text-left">
+                <div class="inline-flex items-center bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3 mb-6">
+                    <i class="fas fa-calendar-alt text-blue-400 mr-2"></i>
+                    <span class="text-blue-400 font-semibold">
+                        {{ formation.date_debut|date:"d M Y" }} - {{ formation.date_fin|date:"d M Y" }}
+                    </span>
+                </div>
+
+                <h1 class="text-4xl lg:text-6xl font-extrabold mb-6 text-white leading-tight">
+                    {{ formation.titre }}
+                </h1>
+
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl leading-relaxed">
+                    {{ formation.description }}
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#details"
+                       class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 text-lg">
+                        <i class="fas fa-info-circle mr-2"></i>Découvrir le Programme
+                    </a>
+                    <a href="{% url 'contact' %}"
+                       class="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 text-lg">
+                        <i class="fas fa-envelope mr-2"></i>S'inscrire
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Détails -->
+<section id="details" class="py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+            <!-- Colonne principale -->
+            <div class="lg:col-span-2 space-y-12">
+
+                <!-- Description détaillée -->
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-blue-100">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-4 rounded-2xl mr-6">
+                            <i class="fas fa-book-open text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-2">À Propos de cette Formation</h2>
+                            <p class="text-gray-600">Découvrez le contenu détaillé du programme</p>
+                        </div>
+                    </div>
+
+                    <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                        <p class="text-lg mb-6">{{ formation.description }}</p>
+
+                        <p class="text-gray-600">
+                            Cette formation est conçue pour vous accompagner dans votre développement professionnel,
+                            en vous dotant des compétences essentielles dans le domaine de la technologie et de l'innovation.
+                            Nos formateurs experts vous guideront à travers un parcours pédagogique structuré et adapté
+                            à vos besoins d'apprentissage.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Points clés -->
+                {% if formation.points_cles %}
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-blue-100">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-4 rounded-2xl mr-6">
+                            <i class="fas fa-check-circle text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-2">Compétences Acquises</h2>
+                            <p class="text-gray-600">Les connaissances et aptitudes que vous développerez</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for point in formation.get_points_list %}
+                        <div class="flex items-start space-x-4 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl border border-blue-200">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-white text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <span class="text-gray-900 font-semibold text-lg">{{ point }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Informations pratiques -->
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-blue-100">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-4 rounded-2xl mr-6">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 mb-2">Informations Pratiques</h2>
+                            <p class="text-gray-600">Tout ce que vous devez savoir sur le déroulement</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-calendar-start text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Date de début</h3>
+                                    <p class="text-gray-600">{{ formation.date_debut|date:"l d F Y" }}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-calendar-end text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Date de fin</h3>
+                                    <p class="text-gray-600">{{ formation.date_fin|date:"l d F Y" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Format</h3>
+                                    <p class="text-gray-600">Formation en présentiel</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-certificate text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-900">Certification</h3>
+                                    <p class="text-gray-600">Attestation de formation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-8">
+
+                <!-- Call-to-Action -->
+                <div class="bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 text-white text-center shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-4">Prêt à Commencer ?</h3>
+                    <p class="text-blue-100 mb-6">Rejoignez cette formation et boostez votre carrière !</p>
+
+                    <a href="{% url 'contact' %}"
+                       class="block w-full bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 text-lg mb-4">
+                        <i class="fas fa-paper-plane mr-2"></i>S'inscrire Maintenant
+                    </a>
+
+                    <a href="tel:+243810684080"
+                       class="block w-full border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 text-lg">
+                        <i class="fas fa-phone mr-2"></i>Nous Appeler
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Navigation</h3>
+
+                    <div class="space-y-4">
+                        <a href="{% url 'formations' %}"
+                           class="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors duration-300 font-semibold">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Retour aux formations</span>
+                        </a>
+
+                        <a href="{% url 'accueil' %}"
+                           class="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors duration-300 font-semibold">
+                            <i class="fas fa-home"></i>
+                            <span>Accueil</span>
+                        </a>
+
+                        <a href="{% url 'contact' %}"
+                           class="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors duration-300 font-semibold">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Partage -->
+                <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Partager cette Formation</h3>
+
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-blue-400 hover:bg-blue-500 text-white rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-green-600 hover:bg-green-700 text-white rounded-2xl flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Call-to-Action Finale -->
+<section class="py-20 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+            Des Questions ?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Notre équipe est là pour vous accompagner dans votre choix de formation et répondre à toutes vos interrogations.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contact' %}"
+               class="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 text-lg">
+                <i class="fas fa-envelope mr-2"></i>Nous Contacter
+            </a>
+            <a href="tel:+243810684080"
+               class="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 text-lg">
+                <i class="fas fa-phone mr-2"></i>+243 810 684 080
+            </a>
+        </div>
+    </div>
+</section>
+
+{% include "footer/footer.html" %}
+
+<!-- Styles personnalisés -->
+<style>
+.prose {
+  color: #374151;
+}
+
+.prose p {
+  margin-bottom: 1.5em;
+  line-height: 1.7;
+}
+
+.prose strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+</style>
+{% endblock %}

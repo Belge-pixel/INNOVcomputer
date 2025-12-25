@@ -44,26 +44,48 @@
                 </div>
             </div>
             <div class="relative">
+                {% if has_achievements %}
                 <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 shadow-2xl">
                     <div class="grid grid-cols-2 gap-6">
                         <div class="text-center">
-                            <div class="text-4xl font-bold text-blue-600 mb-2">10+</div>
+                            <div class="text-4xl font-bold text-blue-600 mb-2">{{ total_annee_experience }}+</div>
                             <div class="text-gray-700 font-medium">Années d'expérience</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-4xl font-bold text-blue-600 mb-2">5000+</div>
+                            <div class="text-4xl font-bold text-blue-600 mb-2">{{ total_apprenants }}+</div>
                             <div class="text-gray-700 font-medium">Apprenants formés</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-4xl font-bold text-blue-600 mb-2">200+</div>
+                            <div class="text-4xl font-bold text-blue-600 mb-2">{{ total_projets }}+</div>
                             <div class="text-gray-700 font-medium">Projets réalisés</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-4xl font-bold text-blue-600 mb-2">50+</div>
+                            <div class="text-4xl font-bold text-blue-600 mb-2">{{ total_entreprises }}+</div>
                             <div class="text-gray-700 font-medium">Entreprises partenaires</div>
                         </div>
                     </div>
                 </div>
+                {% else %}
+                <div class="bg-blue-50 border-2 border-blue-200 rounded-3xl p-8 shadow-lg">
+                    {% if user.is_staff %}
+                    <div class="text-center">
+                        <i class="fas fa-chart-line text-blue-600 text-4xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-blue-900 mb-3">Aucun achievement configuré</h3>
+                        <p class="text-blue-700 mb-4">
+                            Ajoutez des achievements via l'admin pour afficher les statistiques.
+                        </p>
+                        <a href="/admin/accueil/achievement/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+                            <i class="fas fa-plus mr-2"></i>Ajouter un achievement
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="text-center">
+                        <i class="fas fa-star text-gray-400 text-4xl mb-4"></i>
+                        <p class="text-gray-600 text-lg">Nos statistiques seront bientôt disponibles.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -81,46 +103,44 @@
             </p>
         </div>
 
+        {% if has_missions %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Enseigner -->
+            {% for mission in missions %}
+            <!-- Mission -->
             <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                 <div class="text-center mb-6">
                     <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-graduation-cap text-3xl text-white"></i>
+                        <i class="{{ mission.icone_fa }} text-3xl text-white"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Enseigner</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ mission.titre_mission }}</h3>
                 </div>
                 <p class="text-gray-600 text-center leading-relaxed">
-                    Former la prochaine génération de professionnels de la tech avec des programmes complets et adaptés aux besoins du marché.
+                    {{ mission.description_mission }}
                 </p>
             </div>
-
-            <!-- Innover -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="text-center mb-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-lightbulb text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Innover</h3>
-                </div>
-                <p class="text-gray-600 text-center leading-relaxed">
-                    Développer des solutions technologiques de pointe et accompagner nos clients dans leur transformation digitale.
-                </p>
-            </div>
-
-            <!-- Inspirer -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="text-center mb-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-users text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Inspirer</h3>
-                </div>
-                <p class="text-gray-600 text-center leading-relaxed">
-                    Créer une communauté dynamique où l'échange de connaissances et l'esprit d'équipe favorisent l'excellence.
-                </p>
-            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
+            {% if user.is_staff %}
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <i class="fas fa-info-circle text-blue-600 text-2xl"></i>
+                <h3 class="text-xl font-bold text-blue-900">Aucune mission définie</h3>
+            </div>
+            <p class="text-blue-700 mb-6">
+                Commencez à ajouter des missions via l'admin pour les afficher ici.
+            </p>
+            <a href="/admin/a_propos/mission/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+                <i class="fas fa-plus mr-2"></i>Ajouter une mission
+            </a>
+            {% else %}
+            <div class="flex items-center justify-center gap-3">
+                <i class="fas fa-lightbulb text-gray-400 text-2xl"></i>
+                <p class="text-gray-600 text-lg">Les missions de l'entreprise seront bientôt publiées.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -136,43 +156,48 @@
             </p>
         </div>
 
+        {% if has_responsables %}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <!-- Membre équipe 1 -->
+            {% for responsable in responsables %}
+            <!-- Membre équipe -->
             <div class="bg-white rounded-3xl shadow-xl p-6 lg:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                {% if responsable.photo_responsable %}
+                <img src="{{ responsable.photo_responsable.url }}" alt="{{ responsable.nom_complet }}" class="w-20 h-20 lg:w-24 lg:h-24 rounded-full mx-auto mb-4 lg:mb-6 object-cover border-4 border-blue-400">
+                {% else %}
                 <div class="w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6">
                     <i class="fas fa-user-tie text-2xl lg:text-3xl text-white"></i>
                 </div>
-                <h3 class="text-lg lg:text-xl font-bold text-gray-900 mb-2">Directeur Technique</h3>
-                <p class="text-blue-600 font-medium mb-3 lg:mb-4 text-sm lg:text-base">Expert en Développement</p>
+                {% endif %}
+                <h3 class="text-lg lg:text-xl font-bold text-gray-900 mb-2">{{ responsable.nom_complet }}</h3>
+                <p class="text-blue-600 font-medium mb-3 lg:mb-4 text-sm lg:text-base">{{ responsable.role_principal }}</p>
+                <p class="text-green-600 font-medium mb-3 lg:mb-4 text-sm lg:text-base">{{ responsable.specialite }}</p>
                 <p class="text-gray-600 leading-relaxed text-sm lg:text-base">
-                    Plus de 15 ans d'expérience dans le développement d'applications complexes et la gestion d'équipes techniques.
+                    {{ responsable.description }}
                 </p>
             </div>
-
-            <!-- Membre équipe 2 -->
-            <div class="bg-white rounded-3xl shadow-xl p-6 lg:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6">
-                    <i class="fas fa-chalkboard-teacher text-2xl lg:text-3xl text-white"></i>
-                </div>
-                <h3 class="text-lg lg:text-xl font-bold text-gray-900 mb-2">Responsable Formation</h3>
-                <p class="text-blue-600 font-medium mb-3 lg:mb-4 text-sm lg:text-base">Pédagogue & Formateur</p>
-                <p class="text-gray-600 leading-relaxed text-sm lg:text-base">
-                    Spécialiste de la pédagogie numérique avec une passion pour transmettre les connaissances techniques.
-                </p>
-            </div>
-
-            <!-- Membre équipe 3 -->
-            <div class="bg-white rounded-3xl shadow-xl p-6 lg:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div class="w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6">
-                    <i class="fas fa-project-diagram text-2xl lg:text-3xl text-white"></i>
-                </div>
-                <h3 class="text-lg lg:text-xl font-bold text-gray-900 mb-2">Chef de Projet</h3>
-                <p class="text-green-600 font-medium mb-3 lg:mb-4 text-sm lg:text-base">Expert en Gestion de Projet</p>
-                <p class="text-gray-600 leading-relaxed text-sm lg:text-base">
-                    Maîtrise des méthodologies agiles et expérience dans la livraison de projets complexes et innovants.
-                </p>
-            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="bg-gray-50 border-2 border-gray-300 rounded-2xl p-8 text-center max-w-2xl mx-auto">
+            {% if user.is_staff %}
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <i class="fas fa-info-circle text-gray-600 text-2xl"></i>
+                <h3 class="text-xl font-bold text-gray-900">Aucun responsable défini</h3>
+            </div>
+            <p class="text-gray-700 mb-6">
+                Commencez à ajouter des responsables/équipe via l'admin pour les afficher ici.
+            </p>
+            <a href="/admin/a_propos/responsable/" class="inline-block bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded-lg transition">
+                <i class="fas fa-plus mr-2"></i>Ajouter un responsable
+            </a>
+            {% else %}
+            <div class="flex items-center justify-center gap-3">
+                <i class="fas fa-users text-gray-400 text-2xl"></i>
+                <p class="text-gray-600 text-lg">L'équipe sera bientôt présentée.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </section>
 

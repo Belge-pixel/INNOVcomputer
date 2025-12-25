@@ -174,7 +174,7 @@
                       Découvrir
                     </a>
                     {% if user.is_staff %}
-                    <form method="POST" action="{% url 'formations' formation.id %}">
+                    <form method="POST" action="{% url 'formations'  %}">
                       {% csrf_token %}
                       <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded">
                         <i class="fas fa-trash"></i>

@@ -9,6 +9,21 @@ from .forms import NewForm
 
 
 # ----------------------------------------------------------------
+# 🔹 Vue détaillée : Détail d'un article
+# ----------------------------------------------------------------
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import New, Comment
+from .forms import NewForm
+
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponseForbidden,HttpResponse
+
+
+
+# ----------------------------------------------------------------
 # 🔹 Vue principale : Liste des articles publiés
 # ----------------------------------------------------------------
 def blog(request):
@@ -36,18 +51,6 @@ def blog(request):
     return render(request, 'blog/blog.html', context)
 
 
-# ----------------------------------------------------------------
-# 🔹 Vue détaillée : Détail d'un article
-# ----------------------------------------------------------------
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from .models import New, Comment
-from .forms import NewForm
-
-from django.utils import timezone
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponseForbidden
 
 @login_required(login_url='login')
 def blog_detail(request, pk):
@@ -100,14 +103,19 @@ def blog_detail(request, pk):
 def supprimer_new(request, pk):
     """
     Supprime un article de blog si l'utilisateur est l'auteur ou staff.
+    Gère les requêtes HTMX pour suppression sans rechargement.
     """
     new = get_object_or_404(New, pk=pk)
 
     if request.user != new.new_author and not request.user.is_staff:
+        if request.headers.get("Hx-Request"):
+            return HttpResponseForbidden("Vous n'avez pas la permission.")
         return HttpResponseForbidden("Vous n'avez pas la permission de supprimer cet article.")
 
     if request.method == 'POST':
         new.delete()
+        if request.headers.get("Hx-Request"):
+            return HttpResponse("")  # HTMX supprimera l'élément du DOM
         messages.success(request, "L'article a été supprimé avec succès.")
         return redirect('blog')
 
@@ -143,3 +151,4 @@ def blog_form(request):
     }
 
     return render(request, 'blog/blog_form.html', context)
+

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 from .models import Contact
 import urllib.parse
 import requests
@@ -56,3 +58,43 @@ def contact(request):
     return render(request, "contact/contact.html", {
         "error_message": error_message
     })
+
+
+def send_message(request):
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    nom = request.POST.get("name")
+    email = request.POST.get("email")
+    message = request.POST.get("message")
+
+    if not (nom and email and message):
+        html = render_to_string("contact/partials/message_error.html", {
+            "error": "Tous les champs doivent être remplis."
+        })
+        return HttpResponse(html)
+
+    # Enregistrer le message
+    Contact.objects.create(
+        nom_customer_contact=nom,
+        mail_customer_contact=email,
+        message_customer_contact=message
+    )
+
+    # Message WhatsApp
+    whatsapp_text = f"Nouveau message de contact\nNom: {nom}\nEmail: {email}\nMessage: {message}"
+    whatsapp_text_encoded = urllib.parse.quote(whatsapp_text)
+
+    for number in WHATSAPP_NUMBERS:
+        link = f"https://api.callmebot.com/whatsapp.php?phone={number}&text={whatsapp_text_encoded}&apikey=5601173"
+        try:
+            requests.get(link)
+        except:
+            pass
+
+    # Renvoi du fragment HTMX
+    html = render_to_string("contact/partials/message_success.html", {
+        "success": "Votre message a été envoyé avec succès."
+    })
+
+    return HttpResponse(html)

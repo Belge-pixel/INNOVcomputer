@@ -23,6 +23,7 @@
 <section class="py-24 bg-gradient-to-br from-gray-50 to-white animate-on-scroll">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
             <!-- Coordonnées -->
             <div class="space-y-8">
                 <div>
@@ -85,35 +86,37 @@
                 <div class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-2xl border border-white/20">
                     <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Envoyez-nous un message</h2>
 
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="mb-6 p-4 rounded-2xl {% if message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    <!-- Conteneur pour HTMX -->
+                    <div id="form-messages"></div>
 
-                    <form method="POST" action="#" class="space-y-6">
+
+                    <form 
+    method="POST"
+    hx-post="{% url 'send_message' %}"
+    hx-target="#form-messages"
+    hx-swap="innerHTML"
+    class="space-y-6"
+                    >
                         {% csrf_token %}
 
                         <div>
                             <label for="name" class="block text-gray-700 font-semibold mb-3">Nom complet</label>
                             <input type="text" id="name" name="name" required
                                    placeholder="Votre nom complet"
-                                   class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
+                                   class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
                         </div>
 
                         <div>
                             <label for="email" class="block text-gray-700 font-semibold mb-3">Adresse email</label>
                             <input type="email" id="email" name="email" required
                                    placeholder="votre.email@exemple.com"
-                                   class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
+                                   class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
                         </div>
 
                         <div>
                             <label for="subject" class="block text-gray-700 font-semibold mb-3">Sujet</label>
                             <select id="subject" name="subject" required
-                                    class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
+                                    class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-lg bg-white/50 backdrop-blur-sm">
                                 <option value="">Choisissez un sujet</option>
                                 <option value="formation">Formation</option>
                                 <option value="projet">Développement de projet</option>
@@ -127,19 +130,21 @@
                             <label for="message" class="block text-gray-700 font-semibold mb-3">Message</label>
                             <textarea id="message" name="message" rows="6" required
                                       placeholder="Décrivez votre projet ou votre demande..."
-                                      class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-lg resize-none bg-white/50 backdrop-blur-sm"></textarea>
+                                      class="w-full border-2 border-gray-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-lg resize-none bg-white/50 backdrop-blur-sm"></textarea>
                         </div>
 
                         <div class="text-center">
                             <button type="submit"
-                                    class="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-bold px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg flex items-center justify-center gap-3 mx-auto">
+                                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-lg flex items-center justify-center gap-3 mx-auto">
                                 <i class="fas fa-paper-plane"></i>
                                 Envoyer le message
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -188,27 +193,6 @@
 <script>
   const map = document.getElementById("map");
   const mapError = document.getElementById("map-error");
-
-  // La carte utilise maintenant une adresse fixe pour éviter les problèmes de géolocalisation
-  // Si vous voulez réactiver la géolocalisation, décommentez le code ci-dessous
-
-  /*
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        map.src = `https://www.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
-      },
-      (error) => {
-        console.error("Erreur de géolocalisation :", error);
-        mapError.classList.remove("hidden");
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-    );
-  } else {
-    mapError.classList.remove("hidden");
-  }
-  */
 </script>
+
 {% endblock %}
